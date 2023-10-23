@@ -22,7 +22,7 @@ function FollowItem(props: IProps) {
         <Text  color='whiteAlpha.600' fontSize='xs'>{username}</Text>
       </Stack>
       </HStack>
-      <Button _hover={{bg: 'green'}} onClick={handleFollow} variant='outline' rounded='full' color={follow ? "white" : 'whiteAlpha.700'} size='sm'>{follow ? status : 'Following'}</Button>
+      <Button _hover={{bg: 'whatsapp'}}  onClick={handleFollow} variant='outline' rounded='full' color={follow ? "white" : 'whiteAlpha.700'} size='sm'>{follow ? status : 'Following'}</Button>
     </HStack>
   )
 }

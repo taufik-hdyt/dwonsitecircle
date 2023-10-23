@@ -7,5 +7,59 @@
     "imgProfile": "img.jpg",
     "likes": 100,
     "time": 200
+  },
+  {
+    "id": 2,
+    "name": "Randi",
+    "username": "@indahaja",
+    "content": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde praesentium amet quia nam tempora exercitationem! Fuga optio quia quasi maxime impedit, vero, natus eum officia molestiae quam ipsum sint tenetur.",
+    "imgProfile": "img.jpg",
+    "likes": 100,
+    "time": 200
+  },
+  {
+    "id": 3,
+    "name": "Toni",
+    "username": "@indahaja",
+    "content": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde praesentium amet quia nam tempora exercitationem! Fuga optio quia quasi maxime impedit, vero, natus eum officia molestiae quam ipsum sint tenetur.",
+    "imgProfile": "img.jpg",
+    "likes": 100,
+    "time": 200
+  },
+  {
+    "id": 4,
+    "name": "Test",
+    "username": "@indahaja",
+    "content": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde praesentium amet quia nam tempora exercitationem! Fuga optio quia quasi maxime impedit, vero, natus eum officia molestiae quam ipsum sint tenetur.",
+    "imgProfile": "img.jpg",
+    "likes": 100,
+    "time": 200
+  },
+  {
+    "id": 5,
+    "name": "Coba",
+    "username": "@indahaja",
+    "content": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde praesentium amet quia nam tempora exercitationem! Fuga optio quia quasi maxime impedit, vero, natus eum officia molestiae quam ipsum sint tenetur.",
+    "imgProfile": "img.jpg",
+    "likes": 100,
+    "time": 200
+  },
+  {
+    "id": 6,
+    "name": "april",
+    "username": "@indahaja",
+    "content": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde praesentium amet quia nam tempora exercitationem! Fuga optio quia quasi maxime impedit, vero, natus eum officia molestiae quam ipsum sint tenetur.",
+    "imgProfile": "img.jpg",
+    "likes": 100,
+    "time": 200
+  },
+  {
+    "id": 7,
+    "name": "mei",
+    "username": "@indahaja",
+    "content": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde praesentium amet quia nam tempora exercitationem! Fuga optio quia quasi maxime impedit, vero, natus eum officia molestiae quam ipsum sint tenetur.",
+    "imgProfile": "img.jpg",
+    "likes": 100,
+    "time": 200
   }
 ]

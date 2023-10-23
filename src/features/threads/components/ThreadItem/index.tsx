@@ -18,6 +18,7 @@ function Thread(props: IProps) {
   const { comment, content, imgProfile, likes, name, username, time,onClick } = props;
 
   const [like, setLike] = useState(false);
+
   function handleLike() {
     setLike(!like);
   }
