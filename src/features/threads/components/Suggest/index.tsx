@@ -10,7 +10,6 @@ function Suggest() {
           <FollowItem name="Muhammad Jawir" status="Follow" username="@jawiraja" />
         <FollowItem name="Muhammad Jawir" status="Follow" username="@jawiraja" />
           </Stack>
-
         </Box>
     </Card>
   )

@@ -18,7 +18,7 @@ function FollowItem(props: IProps) {
       <HStack spacing={3}>
       <Avatar size='sm' />
       <Stack spacing={-4}>
-        <Text color='white'>{name}</Text>
+        <Text fontSize='xs' color='white'>{name}</Text>
         <Text  color='whiteAlpha.600' fontSize='xs'>{username}</Text>
       </Stack>
       </HStack>

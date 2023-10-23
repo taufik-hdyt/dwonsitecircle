@@ -1,8 +1,11 @@
 [
   {
-    "id": 0,
+    "id": 1,
     "name": "Indah",
-    "posted_at": "4 hari yang lalu",
-    "content": "pernah gasi kalian merasa happy"
+    "username": "@indahaja",
+    "content": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde praesentium amet quia nam tempora exercitationem! Fuga optio quia quasi maxime impedit, vero, natus eum officia molestiae quam ipsum sint tenetur.",
+    "imgProfile": "img.jpg",
+    "likes": 100,
+    "time": 200
   }
 ]
