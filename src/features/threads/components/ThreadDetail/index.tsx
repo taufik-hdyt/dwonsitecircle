@@ -26,7 +26,7 @@ function ThreadDetail() {
             fontWeight="semibold"
             color="whiteAlpha.800"
           >
-            edsads
+            Indah
           </Text>
         </HStack>
         <Text fontSize="sm" color="whiteAlpha.600">

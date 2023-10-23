@@ -30,6 +30,7 @@ function CardProfile() {
         variant="outline"
         mt={8}
         w="fit-content"
+        _hover={{bg: 'gray'}}
       >
         Edit Profile
       </Button>

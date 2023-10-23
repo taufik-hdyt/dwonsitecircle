@@ -7,7 +7,7 @@ function Navbar() {
   return (
     <Stack h="full" justify="space-between">
       <Box>
-        <Heading color="green">Circle</Heading>
+        <Heading color="green">circle</Heading>
         <Stack mt={8} spacing={6}>
           <HStack cursor="pointer" color="white">
             <AiFillHome size={25} />
@@ -26,7 +26,7 @@ function Navbar() {
             <Text fontSize="sm  ">Profile</Text>
           </HStack>
 
-          <Button  rounded="full" colorScheme="whatsapp">
+          <Button size='sm'  rounded="full" colorScheme="whatsapp">
             Create Post
           </Button>
         </Stack>
