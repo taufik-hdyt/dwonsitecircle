@@ -30,7 +30,7 @@ function Thread(props: IProps) {
         <HStack>
           <Text
             display="flex"
-            gap={2}
+            gap={1}
             fontSize="sm"
             fontWeight="semibold"
             color="whiteAlpha.800"
@@ -38,13 +38,13 @@ function Thread(props: IProps) {
             cursor='pointer'
           >
             {name}
-            <Text fontWeight="medium" display="flex" color="whiteAlpha.600">
+            <Text fontWeight="light" display="flex" color="whiteAlpha.600">
               {username} <BsDot color="gray" size={24} />
               {time}
             </Text>
           </Text>
         </HStack>
-        <Text fontSize="sm" color="whiteAlpha.600">
+        <Text fontSize="xs" color="whiteAlpha.800" fontWeight='light'>
           {content}
         </Text>
         <HStack spacing={6}>

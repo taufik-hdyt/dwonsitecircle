@@ -45,6 +45,7 @@ function Home() {
                 variant="unstyled"
                 color="whiteAlpha.400"
                 placeholder="What is happening?!"
+                _focus={{color:'white'}}
               />
             </HStack>
             <HStack>
