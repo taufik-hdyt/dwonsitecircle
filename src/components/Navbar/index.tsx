@@ -1,5 +1,5 @@
 import { Box, Button, HStack, Heading, Stack, Text } from "@chakra-ui/react";
-import { AiFillHome, AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
+import {  AiOutlineUser, AiOutlineHeart,AiOutlineHome } from "react-icons/ai";
 import { TbUserSearch } from "react-icons/tb";
 import { BiLogOut } from "react-icons/bi";
 
@@ -10,7 +10,7 @@ function Navbar() {
         <Heading color="green">circle</Heading>
         <Stack mt={8} spacing={6}>
           <HStack cursor="pointer" color="white">
-            <AiFillHome size={25} />
+            <AiOutlineHome size={25} />
             <Text fontSize="sm  ">Home</Text>
           </HStack>
           <HStack cursor="pointer" color="white">

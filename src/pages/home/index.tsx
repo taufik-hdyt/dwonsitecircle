@@ -28,8 +28,8 @@ function Home() {
 
 
   return (
-    <Grid gridTemplateColumns="270px 1.5fr 1.1fr" bg="blackAlpha.800" h="100vh">
-      <GridItem px={6} py={4} borderRight="1px solid gray">
+    <Grid gridTemplateColumns="270px 1.5fr 1.1fr" bg="blackAlpha.800" h="100vh" >
+      <GridItem  px={6} py={4} borderRight="1px solid gray">
         <Navbar />
       </GridItem>
 
@@ -96,7 +96,7 @@ function Home() {
         </GridItem>
       )}
 
-      <GridItem px={6} py={4}>
+      <GridItem px={6} py={4} >
         <CardProfile />
         <Box mt={4}>
           <Suggest />
