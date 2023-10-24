@@ -45,7 +45,7 @@ function ThreadDetail() {
           fontSize="xs"
           color="whiteAlpha.600"
         >
-          11:32 PM <BsDot size={20} /> Jul26 2023{" "}
+          11:32 PM <BsDot size={20} /> Jul26 2023
         </Text>
 
         <HStack spacing={6}>
