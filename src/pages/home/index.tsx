@@ -2,34 +2,35 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
-  Flex,
   Grid,
   GridItem,
   HStack,
-  Image,
   Input,
+  Skeleton,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import Navbar from "../../components/Navbar";
 import Suggest from "../../features/threads/components/Suggest";
 import CardProfile from "../../features/threads/components/CardProfile";
-import { BsDot, BsFacebook, BsArrowLeftShort } from "react-icons/bs";
+import { BsArrowLeftShort } from "react-icons/bs";
 import { BiImageAdd } from "react-icons/bi";
-import { AiFillLinkedin, AiFillGithub, AiFillInstagram } from "react-icons/ai";
 import ThreadDetail from "../../features/threads/components/ThreadDetail";
 import Thread from "../../features/threads/components/ThreadItem";
 import { useState } from "react";
-import data from '../../mocks/thread.json'
+import Footer from "../../components/Footer";
+import { useFetchThreads } from "../../api/Thread/useFetchThread";
+import { IThreads } from "../../libs/interface/interface";
 
 function Home() {
   const [detail, setDetail] = useState(false);
 
+  const { data: threads, isLoading: loadingThread } = useFetchThreads();
+  const dataThreads = threads?.data;
 
   return (
-    <Grid gridTemplateColumns="270px 1.5fr 1.1fr" bg="blackAlpha.800" h="100vh" >
-      <GridItem  px={6} py={4} borderRight="1px solid gray">
+    <Grid gridTemplateColumns="270px 1.5fr 1.1fr" bg="blackAlpha.800" h="100vh">
+      <GridItem px={6} py={4} borderRight="1px solid gray">
         <Navbar />
       </GridItem>
 
@@ -45,7 +46,7 @@ function Home() {
                 variant="unstyled"
                 color="whiteAlpha.400"
                 placeholder="What is happening?!"
-                _focus={{color:'white'}}
+                _focus={{ color: "white" }}
               />
             </HStack>
             <HStack>
@@ -58,22 +59,23 @@ function Home() {
             </HStack>
           </HStack>
 
-          <Stack mt={6}>
-            {
-              data?.map((e)=> (
+          <Stack mt={8}>
+            {loadingThread && <Skeleton w="full" h={100} />}
+            {dataThreads?.map((e: IThreads) =>
                 <Thread
-                key={e.id}
-                onClick={() => setDetail(true)}
-                comment={e.likes}
-                likes={e.likes}
-                name={e.name}
-                time={'4h'}
-                username={e.username}
-                imgProfile="https://bit.ly/dan-abramov"
-                content={e.content}
-              />
-              ))
-            }
+                  key={e.id}
+                  onClick={() => setDetail(true)}
+                  comment={200}
+                  likes={100}
+                  name={e.user.fullname}
+                  time={e.createdAt}
+                  username={`@${e.user.username}`}
+                  imgProfile={"https://bit.ly/dan-abramov"}
+                  content={e.content}
+                  imageContent={e.image}
+                />
+
+            )}
           </Stack>
         </GridItem>
       )}
@@ -97,34 +99,11 @@ function Home() {
         </GridItem>
       )}
 
-      <GridItem px={6} py={4} >
+      <GridItem px={6} py={4}>
         <CardProfile />
         <Box mt={4}>
           <Suggest />
-
-          <Card mt={4} bg="whiteAlpha.200" p={3}>
-            <Flex>
-              <Text display="flex" fontSize="sm" gap={1} color="whiteAlpha.800">
-                Developedby <Text color="white">Your Name</Text>
-              </Text>
-              <Flex gap="3px" color="gray">
-                <BsDot size={24} />
-                <AiFillGithub size={20} />
-                <AiFillLinkedin size={20} />
-                <BsFacebook size={20} />
-                <AiFillInstagram size={20} />
-              </Flex>
-            </Flex>
-            <Text
-              fontSize="x-small"
-              color="whiteAlpha.600"
-              display="flex"
-              gap={2}
-            >
-              Powered by <Image w="30px" src="src/assets/logo.png" alt="logo" />{" "}
-              Dumbways Indonesia #1Coding Bootcamp
-            </Text>
-          </Card>
+          <Footer />
         </Box>
       </GridItem>
     </Grid>

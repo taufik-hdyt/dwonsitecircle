@@ -1,8 +1,9 @@
-import { Avatar, Box, Flex, HStack, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import { useState } from "react";
+import moment from 'moment'
 
 interface IProps {
   imgProfile?: string;
@@ -13,12 +14,12 @@ interface IProps {
   comment?: number;
   time?: string;
   onClick?: ()=> void
+  imageContent?: string
 }
 function Thread(props: IProps) {
-  const { comment, content, imgProfile, likes, name, username, time,onClick } = props;
+  const { comment, content, imgProfile, likes, name, username, time,onClick,imageContent } = props;
 
   const [like, setLike] = useState(false);
-
   function handleLike() {
     setLike(!like);
   }
@@ -40,13 +41,16 @@ function Thread(props: IProps) {
             {name}
             <Text fontWeight="light" display="flex" color="whiteAlpha.600">
               {username} <BsDot color="gray" size={24} />
-              {time}
+              {moment(time).startOf('hour').fromNow()}
             </Text>
           </Text>
         </HStack>
-        <Text fontSize="xs" color="whiteAlpha.800" fontWeight='light'>
+        <Text mb={2} fontSize="xs" color="whiteAlpha.800" fontWeight='light'>
           {content}
         </Text>
+        {
+          imageContent !== "" && <Image w='full' src={imageContent} alt="img" />
+        }
         <HStack spacing={6}>
           <HStack
             onClick={handleLike}
@@ -62,7 +66,7 @@ function Thread(props: IProps) {
           <HStack cursor="pointer" color="whiteAlpha.600" mt={2}>
             <BiCommentDetail size={20} />
             <Text fontSize="sm" color="whiteAlpha.600">
-              {comment}
+              {comment} Replies
             </Text>
           </HStack>
         </HStack>
