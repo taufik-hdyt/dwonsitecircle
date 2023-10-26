@@ -12,7 +12,7 @@ import {
   Stack,
   Text,
   Textarea,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import Navbar from "../../components/Navbar";
 import Suggest from "../../features/threads/components/Suggest";
@@ -21,52 +21,54 @@ import CardProfile from "../../features/threads/components/CardProfile";
 import { BiImageAdd } from "react-icons/bi";
 import Thread from "../../features/threads/components/ThreadItem";
 import Footer from "../../components/Footer";
-import { useFetchThreads } from "../../api/Thread/useFetchThread";
-import { IThreads } from "../../libs/interface/interface";
+import { useFetchThreads } from "../../features/threads/hooks/useFetchThread";
+import { ICreateThread, IThreads } from "../../interface/thread.interface";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { API } from "../../libs/api";
-
-
+import { usePostThread } from "../../features/threads/hooks/usePostThread";
 
 function Home() {
-  const { data: threads, isLoading: loadingThread,refetch } = useFetchThreads();
+  const {
+    data: threads,
+    isLoading: loadingThread,
+    refetch,
+  } = useFetchThreads();
   const dataThreads = threads?.data;
 
   // POST THREAD
-  const toast = useToast()
-  const [inputContent,setInputContent] = useState("")
-  const [inputImage,setInputImage] = useState("")
-  const {mutate: submitContent} = useMutation({
-    mutationFn: async ()=> {
-      await API.post("/thread", {
-        content : inputContent,
-        image: inputImage
-      }, {
-        headers: {
-          Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjk4Mjg1MDIyLCJleHAiOjE2OTg3ODUwMjJ9.-mSbrnLCven06RZl0zRCDJNnUiGoHCZiIS7Ou6AcuNs"
-        }
-      })
-    },
-    onSuccess : ()=> {
+  const toast = useToast();
+  const [inputContent, setInputContent] = useState("");
+  const [inputImage, setInputImage] = useState("");
+
+  const { mutate: submitContent } = usePostThread({
+    onSuccess: () => {
       toast({
         title: "Succes Post",
         status: "success",
-        position: 'top'
-      })
-      setInputContent("")
-      setInputImage("")
-      refetch()
+        position: "top",
+      });
+      setInputContent("");
+      setInputImage("");
+      refetch();
     },
-    onError: ()=> {
+    onError: () => {
       toast({
         title: "Failed",
         status: "error",
-        position: 'top'
-      })
-    }
-  })
+        position: "top",
+      });
+    },
+  });
 
+  const handleSubmitContent = () => {
+    const body : ICreateThread = {
+      content: inputContent,
+    };
+    if(inputImage) {
+      body.image = inputImage
+    }
+
+    submitContent(body);
+  };
   return (
     <Grid gridTemplateColumns="270px 1.5fr 1.1fr" bg="blackAlpha.800" h="100vh">
       <GridItem px={6} py={4} borderRight="1px solid gray">
@@ -89,9 +91,15 @@ function Home() {
                 placeholder="What is happening?!"
                 _focus={{ color: "white" }}
                 value={inputContent}
-                onChange={(e)=> setInputContent(e.target.value)}
+                onChange={(e) => setInputContent(e.target.value)}
               />
-              <Input value={inputImage} onChange={(e)=> setInputImage(e.target.value)} mt={1} placeholder="image url" />
+              <Input
+              color='white'
+                value={inputImage}
+                onChange={(e) => setInputImage(e.target.value)}
+                mt={1}
+                placeholder="image url"
+              />
             </Box>
           </HStack>
           <Flex>
@@ -99,7 +107,13 @@ function Home() {
             <FormLabel htmlFor="image" cursor="pointer">
               <BiImageAdd size={25} color="green" />
             </FormLabel>
-            <Button onClick={()=> submitContent()} colorScheme="whatsapp" size="xs" px={3} rounded="full">
+            <Button
+              onClick={() => handleSubmitContent()}
+              colorScheme="whatsapp"
+              size="xs"
+              px={3}
+              rounded="full"
+            >
               Post
             </Button>
           </Flex>

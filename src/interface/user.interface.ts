@@ -1,13 +1,4 @@
-export interface IThreads {
-  content: string;
-  createdAt: string;
-  id: number;
-  image: string;
-  updateAt: string;
-  user: IUser
-}
-
-interface IUser {
+export interface IUser {
   createdAt: string
   email:string
   fullname: string

@@ -1,6 +1,12 @@
 import { Box, Button, FormControl, Heading, Input, Link, Stack, Text } from "@chakra-ui/react";
 
+
 function Register() {
+// const toast = useToast()
+// const [fullname,setFullname] = useState("")
+// const [email,setEmail] = useState("")
+// const [password,setPassword] = useState("")
+
   return (
     <Box bg="blackAlpha.800" h='100vh' display='flex' justifyContent='center' alignItems='center' >
         <Box w='350px'>

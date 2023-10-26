@@ -33,10 +33,10 @@ function Thread(props: IProps) {
   }
 
   return (
-    <Flex gap={3} borderBottom="1px solid gray">
+    <Flex gap={3} borderBottom="1px solid gray" mt={1}>
       <Avatar bg="gray" fontWeight="semibold" size="sm" name={name} />
       <Box mb={4}>
-        <Link href="/profile">
+        <Link  href="/profile">
           <HStack>
             <Text
               display="flex"
