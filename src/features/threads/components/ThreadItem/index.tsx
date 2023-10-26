@@ -1,56 +1,69 @@
-import { Avatar, Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, HStack, Image, Link, Text } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import { useState } from "react";
-import moment from 'moment'
+import moment from "moment";
 
 interface IProps {
-  imgProfile?: string;
+  // imgProfile?: string;
   name?: string;
   username?: string;
   content?: string;
-  likes?: number;
+  likes: number;
   comment?: number;
   time?: string;
-  onClick?: ()=> void
-  imageContent?: string
+  imageContent?: string;
 }
 function Thread(props: IProps) {
-  const { comment, content, imgProfile, likes, name, username, time,onClick,imageContent } = props;
+  const {
+    comment,
+    content,
+    likes,
+    name,
+    username,
+    time,
+    imageContent,
+  } = props;
 
   const [like, setLike] = useState(false);
+
   function handleLike() {
     setLike(!like);
   }
 
   return (
-    <Flex gap={3} borderBottom='1px solid gray' >
-      <Avatar size="sm" name="Dan Abrahmov" src={imgProfile} />
+    <Flex gap={3} borderBottom="1px solid gray">
+      <Avatar bg="gray" fontWeight="semibold" size="sm" name={name} />
       <Box mb={4}>
-        <HStack>
-          <Text
-            display="flex"
-            gap={1}
-            fontSize="sm"
-            fontWeight="semibold"
-            color="whiteAlpha.800"
-            onClick={onClick}
-            cursor='pointer'
-          >
-            {name}
-            <Text fontWeight="light" display="flex" color="whiteAlpha.600">
-              {username} <BsDot color="gray" size={24} />
-              {moment(time).startOf('hour').fromNow()}
+        <Link href="/profile">
+          <HStack>
+            <Text
+              display="flex"
+              gap={1}
+              fontSize="sm"
+              fontWeight="semibold"
+              color="whiteAlpha.800"
+              cursor="pointer"
+            >
+              {name}
+              <Text fontWeight="light" display="flex" color="whiteAlpha.600">
+                {username} <BsDot color="gray" size={24} />
+                {moment(time).format("MMM Do YY")}
+              </Text>
             </Text>
+          </HStack>
+        </Link>
+
+        <Link href="/detail">
+          <Text mb={2} fontSize="xs" color="whiteAlpha.800" fontWeight="light">
+            {content}
           </Text>
-        </HStack>
-        <Text mb={2} fontSize="xs" color="whiteAlpha.800" fontWeight='light'>
-          {content}
-        </Text>
-        {
-          imageContent !== "" && <Image w='full' src={imageContent} alt="img" />
-        }
+          {imageContent   && (
+            <Image w="300px" src={imageContent} alt="img" />
+          )}
+        </Link>
+
         <HStack spacing={6}>
           <HStack
             onClick={handleLike}
