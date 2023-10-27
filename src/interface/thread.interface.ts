@@ -7,10 +7,13 @@ export interface IThreads {
   image: string;
   updateAt: string;
   user: IUser
+  likes: number
+  replies: number
 }
 
 export interface ICreateThread {
   content: string
   image?: string
 }
+
 

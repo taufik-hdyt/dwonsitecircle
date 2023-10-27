@@ -55,14 +55,14 @@ function Thread(props: IProps) {
           </HStack>
         </Link>
 
-        <Link href="/detail">
-          <Text mb={2} fontSize="xs" color="whiteAlpha.800" fontWeight="light">
+
+          <Text mb={imageContent ? 2 : 0} fontSize="xs" color="whiteAlpha.800" fontWeight="light">
             {content}
           </Text>
           {imageContent   && (
-            <Image w="300px" src={imageContent} alt="img" />
+            <Image _hover={{w: "full"}} w="300px" src={imageContent} alt="img" />
           )}
-        </Link>
+
 
         <HStack spacing={6}>
           <HStack
@@ -73,15 +73,17 @@ function Thread(props: IProps) {
           >
             <AiFillHeart size={20} color={like ? "red" : ""} />
             <Text fontSize="sm" color="whiteAlpha.600">
-              {likes}
+              {likes ? likes : ""}
             </Text>
           </HStack>
+          <Link href="/reply">
           <HStack cursor="pointer" color="whiteAlpha.600" mt={2}>
             <BiCommentDetail size={20} />
             <Text fontSize="sm" color="whiteAlpha.600">
-              {comment} Replies
+              {comment ? comment : ""} Replies
             </Text>
           </HStack>
+          </Link>
         </HStack>
       </Box>
     </Flex>

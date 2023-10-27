@@ -8,3 +8,16 @@ export interface IUser {
   profile_picture: string
   username: string
 }
+
+export interface IRegister {
+  email:string
+  fullname: string
+  password: string
+}
+
+export interface ILogin{
+  email:string
+  password: string
+}
+
+

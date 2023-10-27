@@ -7,7 +7,7 @@ function Footer() {
     <Card mt={4} bg="whiteAlpha.200" p={3}>
       <Flex>
         <Text display="flex" fontSize="sm" gap={1} color="whiteAlpha.800">
-          Developedby <Text color="white">Your Name</Text>
+          Developedby <Text color="white">TaufikH</Text>
         </Text>
         <Flex gap="3px" color="gray">
           <BsDot size={24} />

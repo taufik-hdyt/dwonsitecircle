@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   FormLabel,
-  Grid,
   GridItem,
   HStack,
   Input,
@@ -14,13 +13,10 @@ import {
   Textarea,
   useToast,
 } from "@chakra-ui/react";
-import Navbar from "../../components/Navbar";
-import Suggest from "../../features/threads/components/Suggest";
-import CardProfile from "../../features/threads/components/CardProfile";
 // import { BsArrowLeftShort } from "react-icons/bs";
 import { BiImageAdd } from "react-icons/bi";
 import Thread from "../../features/threads/components/ThreadItem";
-import Footer from "../../components/Footer";
+
 import { useFetchThreads } from "../../features/threads/hooks/useFetchThread";
 import { ICreateThread, IThreads } from "../../interface/thread.interface";
 import { useState } from "react";
@@ -32,13 +28,14 @@ function Home() {
     isLoading: loadingThread,
     refetch,
   } = useFetchThreads();
-  const dataThreads = threads?.data;
+  const dataThreads = threads?.data.data;
+
+
 
   // POST THREAD
   const toast = useToast();
   const [inputContent, setInputContent] = useState("");
   const [inputImage, setInputImage] = useState("");
-
   const { mutate: submitContent } = usePostThread({
     onSuccess: () => {
       toast({
@@ -66,15 +63,9 @@ function Home() {
     if(inputImage) {
       body.image = inputImage
     }
-
     submitContent(body);
   };
   return (
-    <Grid gridTemplateColumns="270px 1.5fr 1.1fr" bg="blackAlpha.800" h="100vh">
-      <GridItem px={6} py={4} borderRight="1px solid gray">
-        <Navbar />
-      </GridItem>
-
       <GridItem overflowY="auto" px={6} py={4} borderRight="1px solid gray">
         <Text color="white" fontSize="lg">
           Home
@@ -105,12 +96,12 @@ function Home() {
           <Flex>
             <Input display="none" id="image" type="file" />
             <FormLabel htmlFor="image" cursor="pointer">
-              <BiImageAdd size={25} color="green" />
+              <BiImageAdd size={30} color="green" />
             </FormLabel>
             <Button
               onClick={() => handleSubmitContent()}
               colorScheme="whatsapp"
-              size="xs"
+              size="sm"
               px={3}
               rounded="full"
             >
@@ -120,12 +111,12 @@ function Home() {
         </HStack>
 
         <Stack mt={8}>
-          {loadingThread && <Spinner color="white" />}
+          {loadingThread && <Spinner size='lg' color="white" />}
           {dataThreads?.map((e: IThreads) => (
             <Thread
               key={e.id}
-              comment={200}
-              likes={100}
+              comment={e.replies}
+              likes={e.likes}
               name={e.user.fullname}
               time={e.createdAt}
               username={`@${e.user.username}`}
@@ -136,34 +127,6 @@ function Home() {
           ))}
         </Stack>
       </GridItem>
-
-      {/* {detail && (
-        <GridItem borderRight="1px solid gray" px={6} py={6}>
-          <HStack
-            color="white"
-            onClick={() => setDetail(false)}
-            cursor="pointer"
-          >
-            <BsArrowLeftShort size={24} />
-            <Text>Status</Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Necessitatibus tempore rerum quae repellat hic explicabo architecto
-            eos nemo quod suscipit.
-          </HStack>
-          <Box mt={6}>
-            <ThreadDetail />
-          </Box>
-        </GridItem>
-      )} */}
-
-      <GridItem px={6} py={4}>
-        <CardProfile />
-        <Box mt={4}>
-          <Suggest />
-          <Footer />
-        </Box>
-      </GridItem>
-    </Grid>
   );
 }
 
