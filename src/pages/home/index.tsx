@@ -3,14 +3,13 @@ import {
   Box,
   Button,
   Flex,
-  FormLabel,
   GridItem,
   HStack,
-  Input,
   Spinner,
   Stack,
   Text,
   Textarea,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 // import { BsArrowLeftShort } from "react-icons/bs";
@@ -21,6 +20,11 @@ import { useFetchThreads } from "../../features/threads/hooks/useFetchThread";
 import { ICreateThread, IThreads } from "../../interface/thread.interface";
 import { useState } from "react";
 import { usePostThread } from "../../features/threads/hooks/usePostThread";
+import Layout from "../../components/Layout/Layout";
+import CardProfile from "../../features/threads/components/CardProfile";
+import Suggest from "../../features/threads/components/Suggest";
+import Footer from "../../components/Footer";
+import ModalUploadImg from "../../components/Modal/ModalUploadImg";
 
 function Home() {
   const {
@@ -31,11 +35,11 @@ function Home() {
   const dataThreads = threads?.data.data;
 
 
-
   // POST THREAD
   const toast = useToast();
   const [inputContent, setInputContent] = useState("");
-  const [inputImage, setInputImage] = useState("");
+  const [inputImage, setInputImage] = useState<string>("");
+
   const { mutate: submitContent } = usePostThread({
     onSuccess: () => {
       toast({
@@ -56,16 +60,25 @@ function Home() {
     },
   });
 
+
+
   const handleSubmitContent = () => {
-    const body : ICreateThread = {
+    const body: ICreateThread = {
       content: inputContent,
     };
-    if(inputImage) {
-      body.image = inputImage
+    if (inputImage) {
+      body.image = inputImage;
     }
     submitContent(body);
   };
+
+
+  // openModalUpload
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+
   return (
+    <Layout>
       <GridItem overflowY="auto" px={6} py={4} borderRight="1px solid gray">
         <Text color="white" fontSize="lg">
           Home
@@ -73,31 +86,22 @@ function Home() {
         <HStack mt={5} justify="space-between">
           <HStack w="full">
             <Avatar size="sm" mr={3} />
-            <Box>
-              <Textarea
-                fontSize="sm"
-                resize="none"
-                variant="outline"
-                color="whiteAlpha.400"
-                placeholder="What is happening?!"
-                _focus={{ color: "white" }}
-                value={inputContent}
-                onChange={(e) => setInputContent(e.target.value)}
-              />
-              <Input
-              color='white'
-                value={inputImage}
-                onChange={(e) => setInputImage(e.target.value)}
-                mt={1}
-                placeholder="image url"
-              />
-            </Box>
+            <Textarea
+              fontSize="sm"
+              resize="none"
+              variant="outline"
+              color="whiteAlpha.400"
+              placeholder="What is happening?!"
+              _focus={{ color: "white" }}
+              value={inputContent}
+              onChange={(e) => setInputContent(e.target.value)}
+            />
           </HStack>
           <Flex>
-            <Input display="none" id="image" type="file" />
-            <FormLabel htmlFor="image" cursor="pointer">
+            <Button variant="unstyled" onClick={onOpen}>
               <BiImageAdd size={30} color="green" />
-            </FormLabel>
+            </Button>
+
             <Button
               onClick={() => handleSubmitContent()}
               colorScheme="whatsapp"
@@ -110,23 +114,49 @@ function Home() {
           </Flex>
         </HStack>
 
+
         <Stack mt={8}>
-          {loadingThread && <Spinner size='lg' color="white" />}
+          {loadingThread && <Spinner size="lg" color="white" />}
           {dataThreads?.map((e: IThreads) => (
             <Thread
               key={e.id}
-              comment={e.replies}
+              idContent={e.id}
+              idUser={e.user.id}
+              replies={e.replies}
               likes={e.likes}
               name={e.user.fullname}
               time={e.createdAt}
               username={`@${e.user.username}`}
-              // imgProfile={"https://bit.ly/dan-abramov"}
+              imgProfile={e.user.profile_picture}
               content={e.content}
               imageContent={e.image}
+              refetchThread={refetch}
             />
           ))}
         </Stack>
       </GridItem>
+      <Box px={6} py={4}>
+        <CardProfile
+          follower="100"
+          following="200"
+          name="Toni"
+          profile_bio="Welcome to my profile  "
+          profile_picture="kosing"
+          username="toniaja"
+        />
+        <Box mt={4}>
+          <Suggest />
+          <Footer />
+        </Box>
+      </Box>
+
+      <ModalUploadImg
+        setImage={setInputImage}
+        image={inputImage}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
+    </Layout>
   );
 }
 

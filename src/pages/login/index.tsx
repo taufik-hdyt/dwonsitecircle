@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Box,
   Button,
@@ -9,45 +7,10 @@ import {
   Link,
   Stack,
   Text,
-  useToast
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { usePostLogin } from "../../features/login/hooks/usePostLogin";
-import {useNavigate} from "react-router-dom"
+
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const toast = useToast()
-  const navigate = useNavigate()
-
-  const {mutate: login} = usePostLogin({
-    onSuccess: () => {
-      toast({
-        title: "Succes Post",
-        status: "success",
-        position: "top",
-      });
-      setEmail("")
-      setPassword("")
-      navigate("/")
-    },
-    onError: () => {
-      toast({
-        title: "Failed",
-        status: "error",
-        position: "top",
-      });
-    },
-  })
-
-  function handleLogin(){
-    login({
-      email: email,
-      password: password
-    })
-  }
-
 
   return (
     <Box
@@ -67,25 +30,17 @@ function Login() {
 
         <Stack mt={3} spacing={3} color="white">
           <FormControl>
-            <Input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email/Username"
-            />
+            <Input placeholder="Email/Username" />
           </FormControl>
           <FormControl>
-            <Input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-            />
+            <Input placeholder="Password" />
           </FormControl>
 
           <Text fontSize="sm" textAlign="end">
             Forgot Password?
           </Text>
 
-          <Button onClick={handleLogin} type="submit" rounded="full" colorScheme="whatsapp">
+          <Button type="submit" rounded="full" colorScheme="whatsapp">
             Login
           </Button>
         </Stack>

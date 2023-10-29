@@ -7,13 +7,27 @@ export interface IThreads {
   image: string;
   updateAt: string;
   user: IUser
-  likes: number
-  replies: number
+  likes: ILike[]
+  replies: IReplies[]
 }
 
 export interface ICreateThread {
   content: string
   image?: string
+}
+
+export interface ILike {
+  createdAt: Date;
+  id: number;
+  updateAt: Date;
+  user: IUser
+}
+export interface IReplies {
+  content: string
+  createdAt: Date
+  id: number
+  image: string
+  updateAt: Date
 }
 
 

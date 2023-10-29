@@ -24,7 +24,7 @@ function Register() {
   const { mutate: register } = usePostRegister({
     onSuccess: () => {
       toast({
-        title: "Succes Post",
+        title: "Succes Register",
         status: "success",
         position: "top",
       });

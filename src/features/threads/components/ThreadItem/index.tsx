@@ -1,42 +1,62 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar, Box, Flex, HStack, Image, Link, Text } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
-import { useState } from "react";
 import moment from "moment";
+import { ILike, IReplies } from "../../../../interface/thread.interface";
+import { useLike } from "../../../like/like.hook";
+
 
 interface IProps {
-  // imgProfile?: string;
+  idContent?: number
+  idUser?: number
+  imgProfile?: string;
   name?: string;
   username?: string;
   content?: string;
-  likes: number;
-  comment?: number;
+  likes: ILike[];
+  replies?: IReplies[];
   time?: string;
-  imageContent?: string;
+  imageContent?: string
+  refetchThread?: any
 }
 function Thread(props: IProps) {
   const {
-    comment,
+    replies,
     content,
     likes,
     name,
     username,
     time,
     imageContent,
+    imgProfile,
+    idUser,
+    idContent,
+    refetchThread
+
   } = props;
 
-  const [like, setLike] = useState(false);
-
-  function handleLike() {
-    setLike(!like);
+   // handleLike
+  const {mutate: like} = useLike(idContent)
+  function handleLike(){
+    like()
+    refetchThread()
   }
+
+
 
   return (
     <Flex gap={3} borderBottom="1px solid gray" mt={1}>
-      <Avatar bg="gray" fontWeight="semibold" size="sm" name={name} />
+      <Avatar
+        bg="gray"
+        fontWeight="semibold"
+        size="sm"
+        name={name}
+        src={imgProfile}
+      />
       <Box mb={4}>
-        <Link  href="/profile">
+        <Link href="/profile">
           <HStack>
             <Text
               display="flex"
@@ -55,34 +75,45 @@ function Thread(props: IProps) {
           </HStack>
         </Link>
 
-
-          <Text mb={imageContent ? 2 : 0} fontSize="xs" color="whiteAlpha.800" fontWeight="light">
-            {content}
-          </Text>
-          {imageContent   && (
-            <Image _hover={{w: "full"}} w="300px" src={imageContent} alt="img" />
-          )}
-
+        <Text
+          wordBreak="break-word"
+          mb={imageContent ? 2 : 0}
+          fontSize="sm"
+          color="whiteAlpha.800"
+          fontWeight="light"
+        >
+          {content}
+        </Text>
+        {imageContent && (
+          <Image
+            // _hover={{ w: "full" }}
+            w="300px"
+            src={imageContent}
+            alt="img"
+          />
+        )}
 
         <HStack spacing={6}>
           <HStack
-            onClick={handleLike}
+          onClick={handleLike}
             cursor="pointer"
             color="whiteAlpha.600"
             mt={2}
           >
-            <AiFillHeart size={20} color={like ? "red" : ""} />
+            <AiFillHeart size={24}
+             color={likes.find((e)=> e.user.id === idUser) ? "red" : ""}
+             />
             <Text fontSize="sm" color="whiteAlpha.600">
-              {likes ? likes : ""}
+              {likes?.length}
             </Text>
           </HStack>
-          <Link href="/reply">
-          <HStack cursor="pointer" color="whiteAlpha.600" mt={2}>
-            <BiCommentDetail size={20} />
-            <Text fontSize="sm" color="whiteAlpha.600">
-              {comment ? comment : ""} Replies
-            </Text>
-          </HStack>
+          <Link href={`reply/${idContent}`}>
+            <HStack cursor="pointer" color="whiteAlpha.600" mt={2}>
+              <BiCommentDetail size={24} />
+              <Text fontSize="sm" color="whiteAlpha.600">
+                {replies?.length} Replies
+              </Text>
+            </HStack>
           </Link>
         </HStack>
       </Box>

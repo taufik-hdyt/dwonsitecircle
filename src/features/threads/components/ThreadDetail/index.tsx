@@ -11,13 +11,12 @@ import {
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail, BiImageAdd } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
-import Thread from "../ThreadItem";
 
 function ThreadDetail() {
   return (
-    <Flex gap={3} >
+    <Flex gap={3}>
       <Avatar size="sm" name="Dan Abrahmov" />
-      <Box >
+      <Box>
         <HStack>
           <Text
             display="flex"
@@ -64,12 +63,14 @@ function ThreadDetail() {
         </HStack>
 
         <HStack mt={5} justify="space-between">
-          <HStack>
+          <HStack  w='full'>
             <Avatar size="sm" mr={3} />
             <Input
+            rounded='none'
+            borderBottom='1px solid gray'
               variant="unstyled"
-              color="whiteAlpha.400"
-              placeholder="What is happening?!"
+              color="white"
+              placeholder="Type your reply!"
             />
           </HStack>
           <HStack>
@@ -77,22 +78,12 @@ function ThreadDetail() {
               <BiImageAdd size={25} color="green" />
             </Box>
             <Button colorScheme="whatsapp" size="xs" px={3} rounded="full">
-              Post
+              Reply
             </Button>
           </HStack>
         </HStack>
 
-        <Stack mt={8}>
-          <Thread
-            comment={100}
-            likes={389}
-            name="Indah Pra Karya"
-            time="4h"
-            username="@indahaja"
-            imgProfile="https://bit.ly/dan-abramov"
-            content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis in a culpa accusamus exercitationem possimus inventore veniam laudantium. Facere eius illum culpa saepe, voluptate quis! Molestias eligendi quia fugiat ducimus?"
-          />
-        </Stack>
+        <Stack mt={8}></Stack>
       </Box>
     </Flex>
   );
