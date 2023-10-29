@@ -5,52 +5,19 @@ import {
   FormControl,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Link,
   Stack,
   Text,
-  useToast,
 } from "@chakra-ui/react";
-import { usePostRegister } from "../../features/register/hooks/usePostRegister";
+import { useRegister } from "../../features/auth/useRegister";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 function Register() {
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const toast = useToast();
-  const router = useNavigate()
-
-  const { mutate: register } = usePostRegister({
-    onSuccess: () => {
-      toast({
-        title: "Succes Register",
-        status: "success",
-        position: "top",
-      });
-      setEmail("")
-      setFullname("")
-      setPassword("")
-      router("/login")
-    },
-    onError: () => {
-      toast({
-        title: "Failed",
-        status: "error",
-        position: "top",
-      });
-    },
-  });
-
-  function handleRegister() {
-    register({
-      email: email,
-      fullname: fullname,
-      password: password,
-    });
-  }
-
-
+  const { handleChange, handleRegister } = useRegister();
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <Box
       bg="blackAlpha.800"
@@ -69,25 +36,30 @@ function Register() {
         <Stack mt={3} spacing={3} color="white">
           <FormControl>
             <Input
-              value={fullname}
+              name="fullname"
               placeholder="Fullname"
-              onChange={(e) => setFullname(e.target.value)}
+              onChange={handleChange}
             />
           </FormControl>
           <FormControl>
-            <Input
-              value={email}
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <Input name="email" placeholder="Email" onChange={handleChange} />
           </FormControl>
           <FormControl>
-            <Input
-              type="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <InputGroup>
+              <InputRightElement onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? (
+                  <AiOutlineEye size={24} />
+                ) : (
+                  <AiOutlineEyeInvisible size={24} />
+                )}
+              </InputRightElement>
+              <Input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                onChange={handleChange}
+                placeholder="Password"
+              />
+            </InputGroup>
           </FormControl>
 
           <Button

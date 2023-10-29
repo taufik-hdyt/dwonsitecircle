@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { API } from "../../libs/api";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const useLike = (id?: number, )=>{
+export const useLike = ({onSuccess, id}: any)=>{
  return useMutation({
     mutationFn: async ()=> {
       await API.post(`thread/${id}/like`,"", {
@@ -10,6 +10,7 @@ export const useLike = (id?: number, )=>{
         }
       })
     },
+    onSuccess,
 
   });
 };

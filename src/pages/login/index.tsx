@@ -4,14 +4,19 @@ import {
   FormControl,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
-
+import { useLogin } from "../../features/auth/useLogin";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { useState } from "react";
 
 function Login() {
-
+  const { handleChange, handleLogin } = useLogin();
+  const [showPassword,setShowPassword] = useState(false)
   return (
     <Box
       bg="blackAlpha.800"
@@ -30,17 +35,34 @@ function Login() {
 
         <Stack mt={3} spacing={3} color="white">
           <FormControl>
-            <Input placeholder="Email/Username" />
+            <Input
+              name="emailOrUsername"
+              onChange={handleChange}
+              placeholder="Email/Username"
+            />
           </FormControl>
           <FormControl>
-            <Input placeholder="Password" />
+            <InputGroup>
+            <InputRightElement onClick={()=> setShowPassword(!showPassword)}>
+              {
+                showPassword ?  <AiOutlineEye size={24} /> : <AiOutlineEyeInvisible size={24} />
+              }
+
+            </InputRightElement>
+              <Input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                onChange={handleChange}
+                placeholder="Password"
+              />
+            </InputGroup>
           </FormControl>
 
           <Text fontSize="sm" textAlign="end">
             Forgot Password?
           </Text>
 
-          <Button type="submit" rounded="full" colorScheme="whatsapp">
+          <Button onClick={handleLogin} rounded="full" colorScheme="whatsapp">
             Login
           </Button>
         </Stack>

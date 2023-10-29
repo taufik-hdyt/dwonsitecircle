@@ -38,12 +38,18 @@ function Thread(props: IProps) {
   } = props;
 
    // handleLike
-  const {mutate: like} = useLike(idContent)
-  function handleLike(){
-    like()
-    refetchThread()
+  const {mutate: like} = useLike({
+    id: idContent,
+    onSuccess: ()=> {
+      refetchThread()
+    }
+  })
+
+   function handleLike(){
+     like()
   }
 
+  console.log(likes);
 
 
   return (
@@ -86,7 +92,6 @@ function Thread(props: IProps) {
         </Text>
         {imageContent && (
           <Image
-            // _hover={{ w: "full" }}
             w="300px"
             src={imageContent}
             alt="img"
@@ -101,17 +106,18 @@ function Thread(props: IProps) {
             mt={2}
           >
             <AiFillHeart size={24}
-             color={likes.find((e)=> e.user.id === idUser) ? "red" : ""}
+            color={likes.find((e)=> e.user.id === idUser) ? "red": ""}
              />
+
             <Text fontSize="sm" color="whiteAlpha.600">
-              {likes?.length}
+              {likes?.length ? likes.length : ""}
             </Text>
           </HStack>
           <Link href={`reply/${idContent}`}>
             <HStack cursor="pointer" color="whiteAlpha.600" mt={2}>
               <BiCommentDetail size={24} />
               <Text fontSize="sm" color="whiteAlpha.600">
-                {replies?.length} Replies
+                {replies?.length ? replies.length : ""} Replies
               </Text>
             </HStack>
           </Link>

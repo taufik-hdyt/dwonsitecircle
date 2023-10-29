@@ -16,7 +16,7 @@ export interface IRegister {
 }
 
 export interface ILogin{
-  email:string
+  emailOrUsername:string
   password: string
 }
 
