@@ -11,7 +11,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useRegister } from "../../features/auth/useRegister";
+import { useRegister } from "../../features/auth/hooks/useRegister";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 

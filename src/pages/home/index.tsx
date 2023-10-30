@@ -25,6 +25,7 @@ import CardProfile from "../../features/threads/components/CardProfile";
 import Suggest from "../../features/threads/components/Suggest";
 import Footer from "../../components/Footer";
 import ModalUploadImg from "../../components/Modal/ModalUploadImg";
+import { AxiosError } from "axios";
 
 function Home() {
   const {
@@ -51,14 +52,24 @@ function Home() {
       setInputImage("");
       refetch();
     },
-    onError: () => {
+    onError: (error: unknown) => {
+      let errorMessage = "Something Error";
+      if(error instanceof AxiosError) {
+        if(error.response) {
+          errorMessage = error.response.data.Error
+        } else {
+          errorMessage = error.message
+        }
+      }
       toast({
-        title: "Failed",
+        title: errorMessage,
         status: "error",
         position: "top",
       });
     },
   });
+
+
 
 
 
@@ -71,8 +82,6 @@ function Home() {
     }
     submitContent(body);
   };
-
-
   // openModalUpload
   const { isOpen, onOpen, onClose } = useDisclosure();
 

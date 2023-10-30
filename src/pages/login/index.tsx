@@ -10,7 +10,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useLogin } from "../../features/auth/useLogin";
+import { useLogin } from "../../features/auth/hooks/useLogin";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { useState } from "react";
 

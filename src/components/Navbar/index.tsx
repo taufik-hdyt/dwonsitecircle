@@ -1,9 +1,16 @@
 import { Box, Button, HStack, Heading, Stack, Text } from "@chakra-ui/react";
-import {  AiOutlineUser, AiOutlineHeart,AiOutlineHome } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineHeart, AiOutlineHome } from "react-icons/ai";
 import { TbUserSearch } from "react-icons/tb";
 import { BiLogOut } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
+  function handleLogout() {
+    localStorage.clear();
+    navigate("login");
+  }
+
   return (
     <Stack h="full" justify="space-between">
       <Box>
@@ -26,7 +33,7 @@ function Navbar() {
             <Text fontSize="sm  ">Profile</Text>
           </HStack>
 
-          <Button size='sm'  rounded="full" colorScheme="whatsapp">
+          <Button size="sm" rounded="full" colorScheme="whatsapp">
             Create Post
           </Button>
         </Stack>
@@ -40,6 +47,7 @@ function Navbar() {
         leftIcon={<BiLogOut size={30} />}
         colorScheme="teal"
         variant="unstyled"
+        onClick={handleLogout}
       >
         Logout
       </Button>

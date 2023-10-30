@@ -49,7 +49,6 @@ function Thread(props: IProps) {
      like()
   }
 
-  console.log(likes);
 
 
   return (
