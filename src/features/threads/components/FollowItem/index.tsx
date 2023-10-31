@@ -5,21 +5,23 @@ interface IProps{
   name?: string
   username?: string
   status?: string
+  imgProfile?: string
 }
 function FollowItem(props: IProps) {
-  const {name,status,username} = props
+  const {name,status,username,imgProfile} = props
 
   const [follow,setFollow] = useState(false)
+
   function handleFollow(){
     setFollow(!follow)
   }
   return (
     <HStack justify='space-between' >
       <HStack spacing={3}>
-      <Avatar size='sm' />
+      <Avatar size='sm' src={imgProfile} />
       <Stack spacing={-4}>
         <Text fontSize='xs' color='white'>{name}</Text>
-        <Text  color='whiteAlpha.600' fontSize='xs'>{username}</Text>
+        <Text  color='whiteAlpha.600' fontSize='xs'>@{username}</Text>
       </Stack>
       </HStack>
       <Button _hover={{bg: 'whatsapp'}}  onClick={handleFollow} variant='outline' rounded='full' color={follow ? "white" : 'whiteAlpha.700'} size='sm'>{follow ? status : 'Following'}</Button>

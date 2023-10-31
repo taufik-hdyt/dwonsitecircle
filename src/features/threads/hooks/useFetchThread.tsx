@@ -7,7 +7,7 @@ export const useFetchThreads = () => {
       const dataThreads = await API.get("/threads");
       return dataThreads;
     },
-    queryKey: ['fetch.threads'],
+    queryKey: ['threads'],
   });
   return {
     data: threads,

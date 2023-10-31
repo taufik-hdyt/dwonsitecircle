@@ -1,47 +1,48 @@
-import { Box, Button, GridItem, Link } from "@chakra-ui/react";
+import { Box, Button, GridItem, HStack, Link, Spinner } from "@chakra-ui/react";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import Layout from "../../components/Layout/Layout";
-import CardProfile from "../../features/threads/components/CardProfile";
-import Suggest from "../../features/threads/components/Suggest";
-import Footer from "../../components/Footer";
-
 import ThreadDetail from "../../features/threads/components/ThreadDetail";
+import { useParams } from "react-router-dom";
+import { useFetchDetailThreads } from "../../features/threads/hooks/useFetchDetailThread";
 
 function Reply() {
+  const params = useParams();
+
+  const idParams = Number(params.id);
+
+  const { data, isLoading } = useFetchDetailThreads(idParams);
+  const detailData = data?.data;
+
   return (
     <Layout>
-      <GridItem overflowY="auto" px={6} py={4} borderRight="1px solid gray">
-        <Link href="/">
-          <Button
-            display="flex"
-            color="white"
-            variant="unstyled"
-            leftIcon={<IoChevronBackCircleOutline size={24} />}
-          >
-            Status
-          </Button>
-        </Link>
+      <GridItem>
+        <HStack justifyContent='space-between'>
+          <Link href="/">
+            <Button
+              display="flex"
+              color="white"
+              variant="unstyled"
+              leftIcon={<IoChevronBackCircleOutline size={24} />}
+            >
+              Status
+            </Button>
+          </Link>
+          {isLoading && <Spinner color="white" />}
+        </HStack>
         {/*  REPLY =================== */}
         <Box mt={4}>
-          <ThreadDetail />
+          <ThreadDetail
+            imgContent={detailData?.image}
+            imgProfile={detailData?.user.profile_picture}
+            content={detailData?.content}
+            likeCount={detailData?.likes}
+            replies={detailData?.replies}
+            name={detailData?.user.fullname}
+            username={detailData?.user.username}
+            time={detailData?.createdAt}
+          />
         </Box>
-
-        {/* ============================================================ */}
       </GridItem>
-      <Box px={6} py={4}>
-        <CardProfile
-          follower="100"
-          following="200"
-          name="Toni"
-          profile_bio="okelah"
-          profile_picture="kosing"
-          username="toniaja"
-        />
-        <Box mt={4}>
-          <Suggest />
-          <Footer />
-        </Box>
-      </Box>
     </Layout>
   );
 }

@@ -3,28 +3,28 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Register from "./pages/register";
 import Login from "./pages/login";
 import Reply from "./pages/reply";
-import { useState, useEffect, ReactNode } from "react";
-import { API } from "./libs/api";
-import { Spinner } from "@chakra-ui/react";
-
+import { useEffect, ReactNode } from "react";
+import { API, setAuthToken } from "./libs/api";
+import { useDispatch } from "react-redux";
+import { AUTH_CHECK, AUTH_ERROR } from "./store/RootReducer";
+import FollowsPage from "./pages/follows";
+import SearchPage from "./pages/searchUser";
 
 function App() {
-  const [loading, setLoading] = useState<boolean>(true);
+  const dispatch = useDispatch();
   async function authCheck() {
     try {
-      await API.get("/auth/check");
-      setLoading(false);
-    } catch (error) {
-      localStorage.clear();
+      setAuthToken(localStorage.token);
+      const response = await API.get("/auth/check");
+      dispatch(AUTH_CHECK(response.data));
+    } catch (errorMessager) {
+      dispatch(AUTH_ERROR());
       return <Navigate to={"/login"} />;
     }
   }
-
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (localStorage.token) {
       authCheck();
-    } else {
-      setLoading(false);
     }
   }, []);
 
@@ -46,9 +46,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      {
-      loading && <Spinner color='white' size='lg'  />
-    }
       <Routes>
         <Route
           path="/register"
@@ -68,10 +65,19 @@ function App() {
         />
 
         <Route
-          path={`reply/${29}`}
+          path={`reply/:id`}
           element={
             <IsLogged>
               <Reply />
+            </IsLogged>
+          }
+        />
+
+        <Route
+          path="/follows"
+          element={
+            <IsLogged>
+              <FollowsPage />
             </IsLogged>
           }
         />
@@ -80,6 +86,14 @@ function App() {
           element={
             <IsLogged>
               <Home />
+            </IsLogged>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <IsLogged>
+              <SearchPage />
             </IsLogged>
           }
         />

@@ -6,11 +6,12 @@ import { BiCommentDetail } from "react-icons/bi";
 import moment from "moment";
 import { ILike, IReplies } from "../../../../interface/thread.interface";
 import { useLike } from "../../../like/like.hook";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/type/RootState";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
-  idContent?: number
-  idUser?: number
+  idContent?: number;
   imgProfile?: string;
   name?: string;
   username?: string;
@@ -18,8 +19,7 @@ interface IProps {
   likes: ILike[];
   replies?: IReplies[];
   time?: string;
-  imageContent?: string
-  refetchThread?: any
+  imageContent?: string;
 }
 function Thread(props: IProps) {
   const {
@@ -31,25 +31,23 @@ function Thread(props: IProps) {
     time,
     imageContent,
     imgProfile,
-    idUser,
     idContent,
-    refetchThread
-
   } = props;
 
-   // handleLike
-  const {mutate: like} = useLike({
+  const queryClient = useQueryClient();
+  const auth = useSelector((state: RootState) => state.auth);
+  console.log(auth);
+
+  const { mutate: like } = useLike({
     id: idContent,
-    onSuccess: ()=> {
-      refetchThread()
-    }
-  })
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["threads"] });
+    },
+  });
 
-   function handleLike(){
-     like()
+  function handleLike() {
+    like();
   }
-
-
 
   return (
     <Flex gap={3} borderBottom="1px solid gray" mt={1}>
@@ -89,24 +87,23 @@ function Thread(props: IProps) {
         >
           {content}
         </Text>
-        {imageContent && (
-          <Image
-            w="300px"
-            src={imageContent}
-            alt="img"
-          />
-        )}
+        {imageContent && <Image w="300px" src={imageContent} alt="img" />}
 
         <HStack spacing={6}>
           <HStack
-          onClick={handleLike}
+            onClick={handleLike}
             cursor="pointer"
             color="whiteAlpha.600"
             mt={2}
           >
-            <AiFillHeart size={24}
-            color={likes.find((e)=> e.user.id === idUser) ? "red": ""}
-             />
+            <AiFillHeart
+              size={24}
+              color={
+                likes.map((like) => like.user.id).includes(auth.user.id)
+                  ? "red"
+                  : ""
+              }
+            />
 
             <Text fontSize="sm" color="whiteAlpha.600">
               {likes?.length ? likes.length : ""}

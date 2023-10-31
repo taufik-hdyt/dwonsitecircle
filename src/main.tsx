@@ -5,6 +5,9 @@ import App from "./App.tsx";
 import "./index.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import {  QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import RootReducer from "./store/RootReducer.ts";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,13 +16,17 @@ const queryClient = new QueryClient({
     },
   },
 });
+const store = configureStore({
+  reducer: RootReducer
+})
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ChakraProvider>
-
+        <Provider store={store}>
         <App />
+        </Provider>
       </ChakraProvider>
     </QueryClientProvider>
   </React.StrictMode>

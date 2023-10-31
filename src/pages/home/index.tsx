@@ -1,7 +1,7 @@
 import {
   Avatar,
-  Box,
   Button,
+  Center,
   Flex,
   GridItem,
   HStack,
@@ -21,13 +21,13 @@ import { ICreateThread, IThreads } from "../../interface/thread.interface";
 import { useState } from "react";
 import { usePostThread } from "../../features/threads/hooks/usePostThread";
 import Layout from "../../components/Layout/Layout";
-import CardProfile from "../../features/threads/components/CardProfile";
-import Suggest from "../../features/threads/components/Suggest";
-import Footer from "../../components/Footer";
 import ModalUploadImg from "../../components/Modal/ModalUploadImg";
 import { AxiosError } from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/type/RootState";
 
 function Home() {
+  const auth = useSelector((state: RootState) => state.auth)
   const {
     data: threads,
     isLoading: loadingThread,
@@ -35,10 +35,9 @@ function Home() {
   } = useFetchThreads();
   const dataThreads = threads?.data.data;
 
-
   // POST THREAD
   const toast = useToast();
-  const [inputContent, setInputContent] = useState("");
+  const [inputContent, setInputContent] = useState<string>("");
   const [inputImage, setInputImage] = useState<string>("");
 
   const { mutate: submitContent } = usePostThread({
@@ -54,11 +53,11 @@ function Home() {
     },
     onError: (error: unknown) => {
       let errorMessage = "Something Error";
-      if(error instanceof AxiosError) {
-        if(error.response) {
-          errorMessage = error.response.data.Error
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          errorMessage = error.response.data.Error;
         } else {
-          errorMessage = error.message
+          errorMessage = error.message;
         }
       }
       toast({
@@ -68,10 +67,6 @@ function Home() {
       });
     },
   });
-
-
-
-
 
   const handleSubmitContent = () => {
     const body: ICreateThread = {
@@ -85,16 +80,15 @@ function Home() {
   // openModalUpload
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-
   return (
     <Layout>
-      <GridItem overflowY="auto" px={6} py={4} borderRight="1px solid gray">
+      <GridItem>
         <Text color="white" fontSize="lg">
           Home
         </Text>
         <HStack mt={5} justify="space-between">
           <HStack w="full">
-            <Avatar size="sm" mr={3} />
+            <Avatar size="sm" mr={3} src={auth.user.profile_picture} />
             <Textarea
               fontSize="sm"
               resize="none"
@@ -123,14 +117,17 @@ function Home() {
           </Flex>
         </HStack>
 
-
         <Stack mt={8}>
-          {loadingThread && <Spinner size="lg" color="white" />}
+          {loadingThread && (
+            <Center>
+              <Spinner size="xl" color="white" />
+            </Center>
+          )}
+
           {dataThreads?.map((e: IThreads) => (
             <Thread
               key={e.id}
               idContent={e.id}
-              idUser={e.user.id}
               replies={e.replies}
               likes={e.likes}
               name={e.user.fullname}
@@ -139,26 +136,10 @@ function Home() {
               imgProfile={e.user.profile_picture}
               content={e.content}
               imageContent={e.image}
-              refetchThread={refetch}
             />
           ))}
         </Stack>
       </GridItem>
-      <Box px={6} py={4}>
-        <CardProfile
-          follower="100"
-          following="200"
-          name="Toni"
-          profile_bio="Welcome to my profile  "
-          profile_picture="kosing"
-          username="toniaja"
-        />
-        <Box mt={4}>
-          <Suggest />
-          <Footer />
-        </Box>
-      </Box>
-
       <ModalUploadImg
         setImage={setInputImage}
         image={inputImage}

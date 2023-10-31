@@ -10,21 +10,22 @@ import {
 } from "@chakra-ui/react";
 
 interface IProps {
-  name: string;
-  username: string;
-  profile_bio: string;
-  following: string;
-  follower: string;
-  profile_picture: string;
+  name?: string;
+  username?: string;
+  profile_bio?: string;
+  following?: [];
+  followers?: [];
+  profile_picture?: string;
 }
 function CardProfile({
-  follower,
+  followers,
   following,
   name,
   profile_bio,
   profile_picture,
   username,
 }: IProps) {
+
   return (
     <Card bg="whiteAlpha.200" p={4}>
       <Text color="white">My Profile</Text>
@@ -72,11 +73,11 @@ function CardProfile({
         </Text>
         <HStack fontSize="sm">
           <HStack>
-            <Text color="whiteAlpha.800">{following}</Text>
+            <Text color="whiteAlpha.800">{following?.length ? following.length : 0}</Text>
             <Text color="whiteAlpha.600">Following</Text>
           </HStack>
           <HStack>
-            <Text color="whiteAlpha.800">{follower}</Text>
+            <Text color="whiteAlpha.800">{followers?.length ? followers.length : 0}</Text>
             <Text color="whiteAlpha.600">Followers</Text>
           </HStack>
         </HStack>

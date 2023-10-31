@@ -1,9 +1,11 @@
 import { ChangeEvent, useState } from "react";
 import { ILogin } from "../../../interface/user.interface";
-import { API } from "../../../libs/api";
-import { useNavigate } from "react-router-dom";
+import { API, setAuthToken } from "../../../libs/api";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
+import { AUTH_CHECK, AUTH_ERROR } from "../../../store/RootReducer";
+import { useDispatch } from "react-redux";
 
 export function useLogin() {
   const navigate = useNavigate();
@@ -21,16 +23,30 @@ export function useLogin() {
     });
   }
 
+  const dispatch = useDispatch()
+  async function authCheck() {
+    try {
+      setAuthToken(localStorage.token);
+      const response = await API.get("/auth/check");
+      dispatch(AUTH_CHECK(response.data));
+    } catch (error) {
+      dispatch(AUTH_ERROR())
+      return <Navigate to={"/login"} />;
+    }
+  }
+
   async function handleLogin() {
     try {
       const response = await API.post("/login", form);
       localStorage.setItem("token", response.data.token)
+      setAuthToken(response.data.token)
       toast({
         title: response?.data.message,
         status: "success",
         position: "top",
         duration: 1000
       });
+      authCheck()
       navigate('/')
     } catch (error) {
       if (axios.isAxiosError(error)) {

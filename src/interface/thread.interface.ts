@@ -28,6 +28,7 @@ export interface IReplies {
   id: number
   image: string
   updateAt: Date
+  user: IUser
 }
 
 
