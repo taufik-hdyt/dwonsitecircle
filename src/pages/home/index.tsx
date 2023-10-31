@@ -5,147 +5,99 @@ import {
   Flex,
   GridItem,
   HStack,
+  Input,
   Spinner,
   Stack,
   Text,
   Textarea,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 // import { BsArrowLeftShort } from "react-icons/bs";
 import { BiImageAdd } from "react-icons/bi";
 import Thread from "../../features/threads/components/ThreadItem";
 
 import { useFetchThreads } from "../../features/threads/hooks/useFetchThread";
-import { ICreateThread, IThreads } from "../../interface/thread.interface";
-import { useState } from "react";
-import { usePostThread } from "../../features/threads/hooks/usePostThread";
+import { IThreads } from "../../interface/thread.interface";
 import Layout from "../../components/Layout/Layout";
-import ModalUploadImg from "../../components/Modal/ModalUploadImg";
-import { AxiosError } from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/type/RootState";
+import { useThreads } from "../../features/threads/hooks/useThread";
 
 function Home() {
-  const auth = useSelector((state: RootState) => state.auth)
-  const {
-    data: threads,
-    isLoading: loadingThread,
-    refetch,
-  } = useFetchThreads();
+  const auth = useSelector((state: RootState) => state.auth);
+  const { data: threads, isLoading: loadingThread } = useFetchThreads();
   const dataThreads = threads?.data.data;
 
-  // POST THREAD
-  const toast = useToast();
-  const [inputContent, setInputContent] = useState<string>("");
-  const [inputImage, setInputImage] = useState<string>("");
-
-  const { mutate: submitContent } = usePostThread({
-    onSuccess: () => {
-      toast({
-        title: "Succes Post",
-        status: "success",
-        position: "top",
-      });
-      setInputContent("");
-      setInputImage("");
-      refetch();
-    },
-    onError: (error: unknown) => {
-      let errorMessage = "Something Error";
-      if (error instanceof AxiosError) {
-        if (error.response) {
-          errorMessage = error.response.data.Error;
-        } else {
-          errorMessage = error.message;
-        }
-      }
-      toast({
-        title: errorMessage,
-        status: "error",
-        position: "top",
-      });
-    },
-  });
-
-  const handleSubmitContent = () => {
-    const body: ICreateThread = {
-      content: inputContent,
-    };
-    if (inputImage) {
-      body.image = inputImage;
-    }
-    submitContent(body);
-  };
-  // openModalUpload
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { fileInputRef, handleButtonClick, handleChange, handlePost } =
+    useThreads();
 
   return (
     <Layout>
-      <GridItem>
-        <Text color="white" fontSize="lg">
-          Home
-        </Text>
-        <HStack mt={5} justify="space-between">
-          <HStack w="full">
-            <Avatar size="sm" mr={3} src={auth.user.profile_picture} />
-            <Textarea
-              fontSize="sm"
-              resize="none"
-              variant="outline"
-              color="whiteAlpha.400"
-              placeholder="What is happening?!"
-              _focus={{ color: "white" }}
-              value={inputContent}
-              onChange={(e) => setInputContent(e.target.value)}
-            />
+      <form onSubmit={handlePost} encType="multipart/form-data">
+        <GridItem>
+          <Text color="white" fontSize="lg">
+            Home
+          </Text>
+          <HStack mt={5} justify="space-between">
+            <HStack w="full">
+              <Avatar size="sm" mr={3} src={auth.user.profile_picture} />
+              <Input
+                fontSize="sm"
+                name="content"
+                variant="outline"
+                color="white"
+                placeholder="What is happening?!"
+                onChange={handleChange}
+              />
+            </HStack>
+            <Flex>
+              <Button onClick={handleButtonClick} variant="unstyled">
+                <BiImageAdd size={30} color="green" />
+              </Button>
+              <Input
+                type="file"
+                name="image"
+                onChange={handleChange}
+                style={{ display: "none" }}
+                ref={fileInputRef}
+              />
+
+              <Button
+                colorScheme="whatsapp"
+                size="sm"
+                px={3}
+                rounded="full"
+                type="submit"
+              >
+                Post
+              </Button>
+            </Flex>
           </HStack>
-          <Flex>
-            <Button variant="unstyled" onClick={onOpen}>
-              <BiImageAdd size={30} color="green" />
-            </Button>
 
-            <Button
-              onClick={() => handleSubmitContent()}
-              colorScheme="whatsapp"
-              size="sm"
-              px={3}
-              rounded="full"
-            >
-              Post
-            </Button>
-          </Flex>
-        </HStack>
+          <Stack mt={8}>
+            {loadingThread && (
+              <Center>
+                <Spinner size="xl" color="white" />
+              </Center>
+            )}
 
-        <Stack mt={8}>
-          {loadingThread && (
-            <Center>
-              <Spinner size="xl" color="white" />
-            </Center>
-          )}
-
-          {dataThreads?.map((e: IThreads) => (
-            <Thread
-              key={e.id}
-              idContent={e.id}
-              replies={e.replies}
-              likes={e.likes}
-              name={e.user.fullname}
-              time={e.createdAt}
-              username={`@${e.user.username}`}
-              imgProfile={e.user.profile_picture}
-              content={e.content}
-              imageContent={e.image}
-            />
-          ))}
-        </Stack>
-      </GridItem>
-      <ModalUploadImg
-        setImage={setInputImage}
-        image={inputImage}
-        isOpen={isOpen}
-        onClose={onClose}
-      />
+            {dataThreads?.map((e: IThreads) => (
+              <Thread
+                key={e.id}
+                idThread={e.id}
+                replies={e.replies}
+                likes={e.likes}
+                name={e.user.fullname}
+                time={e.createdAt}
+                username={`@${e.user.username}`}
+                imgProfile={e.user.profile_picture}
+                content={e.content}
+                imageContent={e.image}
+              />
+            ))}
+          </Stack>
+        </GridItem>
+      </form>
     </Layout>
   );
 }

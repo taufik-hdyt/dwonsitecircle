@@ -4,7 +4,7 @@ import { API } from "../../../../../libs/api";
 export const useFetchUsers = () => {
   const { data: users, isLoading,refetch} = useQuery({
     queryFn: async () => {
-      const dataUsers = await API.get("/users");
+      const dataUsers = await API.get("/suggest-users");
 
 
       return dataUsers.data

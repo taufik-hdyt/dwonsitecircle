@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import moment from "moment";
 import { AiFillHeart } from "react-icons/ai";
-import { BiCommentDetail, BiImageAdd } from "react-icons/bi";
+import { BiCommentDetail } from "react-icons/bi";
 import {
   ICreateThread,
   ILike,
@@ -54,14 +54,12 @@ function ThreadDetail({
   const [inputContent, setInputContent] = useState<string>("");
   // const [inputImage, setInputImage] = useState<string>("");
 
-
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const { mutate: replyThread } = useThreadReply({
     idThread: idThread,
     onSuccess: () => {
-      setInputContent("")
-      queryClient.invalidateQueries({queryKey: ["threadsReply"]})
-
+      setInputContent("");
+      queryClient.invalidateQueries({ queryKey: ["threadsReply"] });
     },
   });
 
@@ -135,6 +133,7 @@ function ThreadDetail({
           <HStack w="full">
             <Avatar size="sm" mr={3} src={auth.user.profile_picture} />
             <Input
+            value={inputContent}
               onChange={(e) => setInputContent(e.target.value)}
               rounded="none"
               borderBottom="1px solid gray"
@@ -147,7 +146,13 @@ function ThreadDetail({
             {/* <Box cursor="pointer">
               <BiImageAdd size={25} color="green" />
             </Box> */}
-            <Button onClick={handleReply} colorScheme="whatsapp" size="xs" px={3} rounded="full">
+            <Button
+              onClick={handleReply}
+              colorScheme="whatsapp"
+              size="xs"
+              px={3}
+              rounded="full"
+            >
               Reply
             </Button>
           </HStack>

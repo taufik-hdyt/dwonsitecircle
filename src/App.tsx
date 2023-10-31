@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { AUTH_CHECK, AUTH_ERROR } from "./store/RootReducer";
 import FollowsPage from "./pages/follows";
 import SearchPage from "./pages/searchUser";
+import ProfilePage from "./pages/profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -94,6 +95,14 @@ function App() {
           element={
             <IsLogged>
               <SearchPage />
+            </IsLogged>
+          }
+        />
+        <Route
+          path="/profile/:usename"
+          element={
+            <IsLogged>
+              <ProfilePage />
             </IsLogged>
           }
         />

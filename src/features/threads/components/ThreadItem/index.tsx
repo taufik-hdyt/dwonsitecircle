@@ -11,7 +11,7 @@ import { RootState } from "../../../../store/type/RootState";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
-  idContent?: number;
+  idThread?: number;
   imgProfile?: string;
   name?: string;
   username?: string;
@@ -21,33 +21,26 @@ interface IProps {
   time?: string;
   imageContent?: string;
 }
-function Thread(props: IProps) {
-  const {
-    replies,
-    content,
-    likes,
-    name,
-    username,
-    time,
-    imageContent,
-    imgProfile,
-    idContent,
-  } = props;
-
+function Thread({
+  likes,
+  content,
+  idThread,
+  imageContent,
+  imgProfile,
+  name,
+  replies,
+  time,
+  username,
+}: IProps) {
   const queryClient = useQueryClient();
   const auth = useSelector((state: RootState) => state.auth);
-  console.log(auth);
 
   const { mutate: like } = useLike({
-    id: idContent,
+    id: idThread,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["threads"] });
     },
   });
-
-  function handleLike() {
-    like();
-  }
 
   return (
     <Flex gap={3} borderBottom="1px solid gray" mt={1}>
@@ -59,7 +52,7 @@ function Thread(props: IProps) {
         src={imgProfile}
       />
       <Box mb={4}>
-        <Link href="/profile">
+        <Link href={`/profile/${username}`}>
           <HStack>
             <Text
               display="flex"
@@ -91,7 +84,7 @@ function Thread(props: IProps) {
 
         <HStack spacing={6}>
           <HStack
-            onClick={handleLike}
+            onClick={() => like()}
             cursor="pointer"
             color="whiteAlpha.600"
             mt={2}
@@ -104,12 +97,11 @@ function Thread(props: IProps) {
                   : ""
               }
             />
-
             <Text fontSize="sm" color="whiteAlpha.600">
               {likes?.length ? likes.length : ""}
             </Text>
           </HStack>
-          <Link href={`reply/${idContent}`}>
+          <Link href={`reply/${idThread}`}>
             <HStack cursor="pointer" color="whiteAlpha.600" mt={2}>
               <BiCommentDetail size={24} />
               <Text fontSize="sm" color="whiteAlpha.600">

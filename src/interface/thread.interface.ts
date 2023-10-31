@@ -13,7 +13,7 @@ export interface IThreads {
 
 export interface ICreateThread {
   content: string
-  image?: string
+  image: Blob | MediaSource | string
 }
 
 export interface ILike {
