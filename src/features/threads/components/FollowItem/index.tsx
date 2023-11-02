@@ -1,4 +1,4 @@
-import { Avatar, Button, HStack, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Button, HStack, Link, Stack, Text } from "@chakra-ui/react";
 import { useFollow } from "../../../follows/follow.hook";
 import { API } from "../../../../libs/api";
 import { useDispatch } from "react-redux";
@@ -27,17 +27,19 @@ function FollowItem({ imgProfile, name, username, id }: IProps) {
   });
   return (
     <HStack justify="space-between" >
+      <Link href={`/profile/${id}`}>
       <HStack spacing={3}>
-        <Avatar size="sm" src={imgProfile} />
+        <Avatar size="md" src={imgProfile} />
         <Stack spacing={-4}>
-          <Text fontSize="sm" color="white">
+          <Text fontSize="md" color="white">
             {name}
           </Text>
-          <Text color="whiteAlpha.600" fontSize="xs">
+          <Text color="whiteAlpha.600" fontSize="sm">
             @{username}
           </Text>
         </Stack>
       </HStack>
+      </Link>
 
         <Button
           onClick={() => Follow(id)}

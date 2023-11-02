@@ -13,7 +13,7 @@ import { BsSearch } from "react-icons/bs";
 import { IUser } from "../../interface/user.interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/type/RootState";
-import { useFetchAllUsers } from "../../features/threads/hooks/useFetchAllUsers";
+import { useFetchAllUsers } from "../../features/user/useFetchAllUsers";
 import { useState } from "react";
 
 function SearchPage() {

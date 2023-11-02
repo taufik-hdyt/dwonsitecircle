@@ -53,7 +53,7 @@ function Navbar() {
               <Text fontSize="sm  ">Follows</Text>
             </HStack>
           </Link>
-          <Link href={`profile/${auth.user.username}`}>
+          <Link href={`profile/${auth.user.id}`}>
             <HStack cursor="pointer" color="white">
               <AiOutlineUser size={25} />
               <Text fontSize="sm  ">Profile</Text>

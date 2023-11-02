@@ -100,7 +100,7 @@ function App() {
           }
         />
         <Route
-          path="/profile/:usename"
+          path="/profile/:id"
           element={
             <IsLogged>
               <ProfilePage />

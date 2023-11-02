@@ -17,10 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState, ChangeEvent } from "react";
 import { TbEditCircle } from "react-icons/tb";
-import {
-  IUpdateProfile,
-  IUser,
-} from "../../interface/user.interface";
+import { IUpdateProfile, IUser } from "../../interface/user.interface";
 import { useUpdateProfiile } from "../../features/auth/hooks/useUpdateProfile";
 import { API } from "../../libs/api";
 import { useDispatch } from "react-redux";
@@ -44,16 +41,15 @@ export default function ModalEditProfile({
     }
   }
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { mutate: updateProfile } = useUpdateProfiile({
     id: userData.id,
-    onSuccess: async() => {
+    onSuccess: async () => {
       const response = await API.get("/auth/check");
       dispatch(AUTH_CHECK(response.data));
-      onClose()
+      onClose();
     },
   });
-
 
   const [form, setForm] = useState<IUpdateProfile>({
     email: "",
@@ -73,7 +69,7 @@ export default function ModalEditProfile({
   function handleUpdate() {
     updateProfile({
       email: form.email !== "" ? form.email : userData.email,
-      fullname: form.fullname !== "" ? form.fullname : userData.email,
+      fullname: form.fullname !== "" ? form.fullname : userData.fullname,
       profile_description:
         form.profile_description !== ""
           ? form.profile_description

@@ -20,6 +20,8 @@ interface IProps {
   replies?: IReplies[];
   time?: string;
   imageContent?: string;
+  isLink?: boolean;
+  idUser?: number
 }
 function Thread({
   likes,
@@ -31,6 +33,8 @@ function Thread({
   replies,
   time,
   username,
+  isLink,
+  idUser
 }: IProps) {
   const queryClient = useQueryClient();
   const auth = useSelector((state: RootState) => state.auth);
@@ -44,73 +48,97 @@ function Thread({
 
   return (
     <Flex gap={3} borderBottom="1px solid gray" mt={1}>
-      <Avatar
-        bg="gray"
-        fontWeight="semibold"
-        size="sm"
-        name={name}
-        src={imgProfile}
-      />
-      <Box mb={4}>
-        <Link href={`/profile/${username}`}>
-          <HStack>
-            <Text
-              display="flex"
-              gap={1}
-              fontSize="sm"
-              fontWeight="semibold"
-              color="whiteAlpha.800"
-              cursor="pointer"
-            >
-              {name}
-              <Text fontWeight="light" display="flex" color="whiteAlpha.600">
-                {username} <BsDot color="gray" size={24} />
-                {moment(time).format("MMM Do YY")}
-              </Text>
-            </Text>
-          </HStack>
-        </Link>
-
-        <Text
-          wordBreak="break-word"
-          mb={imageContent ? 2 : 0}
-          fontSize="sm"
-          color="whiteAlpha.800"
-          fontWeight="light"
-        >
-          {content}
-        </Text>
-        {imageContent && <Image w="300px" src={imageContent} alt="img" />}
-
-        <HStack spacing={6}>
-          <HStack
-            onClick={() => like()}
-            cursor="pointer"
-            color="whiteAlpha.600"
-            mt={2}
-          >
-            <AiFillHeart
-              size={24}
-              color={
-                likes.map((like) => like.user.id).includes(auth.user.id)
-                  ? "red"
-                  : ""
-              }
-            />
-            <Text fontSize="sm" color="whiteAlpha.600">
-              {likes?.length ? likes.length : ""}
-            </Text>
-          </HStack>
-          <Link href={`reply/${idThread}`}>
-            <HStack cursor="pointer" color="whiteAlpha.600" mt={2}>
-              <BiCommentDetail size={24} />
-              <Text fontSize="sm" color="whiteAlpha.600">
-                {replies?.length ? replies.length : ""} Replies
+      <HStack align="start" mt={3} spacing={4}>
+        <Avatar
+          bg="gray"
+          fontWeight="semibold"
+          size="md"
+          name={name}
+          src={imgProfile}
+        />
+        <Box mb={4}>
+          {isLink ? (
+            <Link href={`/profile/${idUser}`}>
+              <HStack>
+                <Text
+                  display="flex"
+                  gap={1}
+                  fontSize="sm"
+                  fontWeight="semibold"
+                  color="whiteAlpha.800"
+                  cursor="pointer"
+                >
+                  {name}
+                  <Text
+                    fontWeight="light"
+                    display="flex"
+                    color="whiteAlpha.600"
+                  >
+                    {username} <BsDot color="gray" size={24} />
+                    {moment(time).format("MMM Do YY")}
+                  </Text>
+                </Text>
+              </HStack>
+            </Link>
+          ) : (
+            <HStack>
+              <Text
+                display="flex"
+                gap={1}
+                fontSize="sm"
+                fontWeight="semibold"
+                color="whiteAlpha.800"
+              >
+                {name}
+                <Text fontWeight="light" display="flex" color="whiteAlpha.600">
+                  {username} <BsDot color="gray" size={24} />
+                  {moment(time).format("MMM Do YY")}
+                </Text>
               </Text>
             </HStack>
-          </Link>
-        </HStack>
-      </Box>
+          )}
+
+          <Text
+            wordBreak="break-word"
+            mb={imageContent ? 2 : 0}
+            fontSize="sm"
+            color="whiteAlpha.800"
+            fontWeight="light"
+          >
+            {content}
+          </Text>
+          {imageContent && <Image w="300px" src={imageContent} alt="img" />}
+
+          <HStack spacing={6}>
+            <HStack
+              onClick={() => like()}
+              cursor="pointer"
+              color="whiteAlpha.600"
+              mt={2}
+            >
+              <AiFillHeart
+                size={24}
+                color={
+                  likes.map((like) => like.user.id).includes(auth.user.id)
+                    ? "red"
+                    : ""
+                }
+              />
+              <Text fontSize="sm" color="whiteAlpha.600">
+                {likes?.length ? likes.length : ""}
+              </Text>
+            </HStack>
+            <Link href={`reply/${idThread}`}>
+              <HStack cursor="pointer" color="whiteAlpha.600" mt={2}>
+                <BiCommentDetail size={24} />
+                <Text fontSize="sm" color="whiteAlpha.600">
+                  {replies?.length ? replies.length : ""} Replies
+                </Text>
+              </HStack>
+            </Link>
+          </HStack>
+        </Box>
+      </HStack>
     </Flex>
   );
 }

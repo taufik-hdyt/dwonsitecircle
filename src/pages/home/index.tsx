@@ -24,21 +24,26 @@ import { API } from "../../libs/api";
 
 function Home() {
   const auth = useSelector((state: RootState) => state.auth);
-  const { data: threads, isLoading: loadingThread ,refetch} = useFetchThreads();
+  const {
+    data: threads,
+    isLoading: loadingThread,
+    refetch,
+  } = useFetchThreads();
   const dataThreads = threads?.data.data;
-  const [loadingPost,setLoadingPost] = useState<boolean>(false)
+  const [loadingPost, setLoadingPost] = useState<boolean>(false);
 
-  const { fileInputRef, handleButtonClick, handleChange,form,setForm } = useThreads();
+  const { fileInputRef, handleButtonClick, handleChange, form, setForm } =
+    useThreads();
   async function handlePost(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setLoadingPost(true)
+    setLoadingPost(true);
     const formData = new FormData();
     formData.append("content", form.content);
     formData.append("image", form.image as File);
-    await API.post("/thread-post", formData).finally(()=> {
-      setLoadingPost(false)
-      refetch()
-    })
+    await API.post("/thread-post", formData).finally(() => {
+      setLoadingPost(false);
+      refetch();
+    });
   }
 
   return (
@@ -94,6 +99,8 @@ function Home() {
 
             {dataThreads?.map((e: IThreads) => (
               <Thread
+                idUser={e.id}
+                isLink
                 key={e.id}
                 idThread={e.id}
                 replies={e.replies}
@@ -109,8 +116,6 @@ function Home() {
           </Stack>
         </GridItem>
       </form>
-
-
     </Layout>
   );
 }

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { API } from "../../../libs/api";
+import { API } from "../../libs/api";
 
 export const useFetchAllUsers = (search?: string | "") => {
   const { data: users, isLoading,refetch} = useQuery({

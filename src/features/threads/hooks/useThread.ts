@@ -1,6 +1,5 @@
-import { ChangeEvent, useRef, useState, FormEvent } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { ICreateThread } from "../../../interface/thread.interface";
-import { API } from "../../../libs/api";
 
 
 export function useThreads() {
