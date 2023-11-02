@@ -33,3 +33,11 @@ export interface IFollow {
   profile_picture: string
   username: string
 }
+
+export interface IUpdateProfile{
+  fullname: string
+  username: string
+  email: string
+  profile_description: string
+  profile_picture: string
+}

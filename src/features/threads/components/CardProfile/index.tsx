@@ -16,6 +16,7 @@ interface IProps {
   following?: [];
   followers?: [];
   profile_picture?: string;
+  openModalEditProfile: ()=> void
 }
 function CardProfile({
   followers,
@@ -24,6 +25,7 @@ function CardProfile({
   profile_bio,
   profile_picture,
   username,
+  openModalEditProfile
 }: IProps) {
 
   return (
@@ -56,6 +58,7 @@ function CardProfile({
           mt={8}
           w="fit-content"
           _hover={{ bg: "gray" }}
+          onClick={openModalEditProfile}
         >
           Edit Profile
         </Button>

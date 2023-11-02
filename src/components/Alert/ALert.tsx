@@ -1,42 +1,49 @@
-// import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button } from "@chakra-ui/react";
-// import React from "react";
-// import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Button,
+} from "@chakra-ui/react";
+import  { useRef } from "react";
 
 
-// interface  IProps{
-//   isOpen: boolean
-//   onCLose: ()=> void
-// }
-// export default function ALertConfirm({isOpen,onCLose}:IProps) {
-//   const cancelRef = React.useRef()
-//   return (
-//     <AlertDialog
-//     isCentered
-//     leastDestructiveRef={cancelRef}
-//       isOpen={isOpen}
-//       onClose={onCLose}
-//     >
-//       <AlertDialogOverlay>
-//         <AlertDialogContent>
-//           <AlertDialogHeader fontSize="lg" fontWeight="bold">
-//             Delete Customer
-//           </AlertDialogHeader>
+interface IProps {
+  isOpen: boolean;
+  onCLose: () => void;
+  onOk?: ()=> void
+}
+export default function ALertConfirm({ isOpen, onCLose,onOk }: IProps) {
+  const cancelRef = useRef(null);
+  return (
+    <AlertDialog
+      isCentered
+      leastDestructiveRef={cancelRef}
+      isOpen={isOpen}
+      onClose={onCLose}
+    >
+      <AlertDialogOverlay>
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            Confirm Logout
+          </AlertDialogHeader>
 
-//           <AlertDialogBody>
-//             Are you sure? You can't undo this action afterwards.
-//           </AlertDialogBody>
+          <AlertDialogBody>
+            Are you sure to log out?
+          </AlertDialogBody>
 
-//           <AlertDialogFooter>
-//             <Button onClick={onCLose}>
-//               Cancel
-//             </Button>
-//             <Button colorScheme="red" ml={3}>
-//               Yes
-//             </Button>
-//           </AlertDialogFooter>
-//         </AlertDialogContent>
-//       </AlertDialogOverlay>
-//     </AlertDialog>
-//   );
-// }
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onCLose}>
+              Cancel
+            </Button>
+            <Button onClick={onOk} colorScheme="red" ml={3}>
+              Yes
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
+    </AlertDialog>
+  );
+}

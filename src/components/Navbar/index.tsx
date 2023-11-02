@@ -6,15 +6,29 @@ import {
   Link,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { AiOutlineUser, AiOutlineHeart, AiOutlineHome } from "react-icons/ai";
 import { TbUserSearch } from "react-icons/tb";
 import { BiLogOut } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/type/RootState";
+import ALertConfirm from "../Alert/ALert";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AUTH_LOGOUT } from "../../store/RootReducer";
 
 function Navbar() {
   const auth = useSelector((state: RootState) => state.auth)
+  const {isOpen,onClose,onOpen} = useDisclosure()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  function handleLogout(){
+    dispatch(AUTH_LOGOUT())
+    navigate("/login")
+    onClose()
+  }
 
   return (
     <Stack h="full" justify="space-between">
@@ -60,11 +74,13 @@ function Navbar() {
         leftIcon={<BiLogOut size={30} />}
         colorScheme="teal"
         variant="unstyled"
-        // onClick={handleLogout}
+        onClick={onOpen}
 
       >
         Logout
       </Button>
+
+      <ALertConfirm onOk={()=>handleLogout()} isOpen={isOpen} onCLose={onClose} />
     </Stack>
   );
 }

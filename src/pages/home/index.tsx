@@ -9,10 +9,7 @@ import {
   Spinner,
   Stack,
   Text,
-  Textarea,
-  useDisclosure,
 } from "@chakra-ui/react";
-// import { BsArrowLeftShort } from "react-icons/bs";
 import { BiImageAdd } from "react-icons/bi";
 import Thread from "../../features/threads/components/ThreadItem";
 
@@ -31,16 +28,17 @@ function Home() {
   const dataThreads = threads?.data.data;
   const [loadingPost,setLoadingPost] = useState<boolean>(false)
 
-  const { fileInputRef, handleButtonClick, handleChange,form } = useThreads();
-
+  const { fileInputRef, handleButtonClick, handleChange,form,setForm } = useThreads();
   async function handlePost(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoadingPost(true)
     const formData = new FormData();
     formData.append("content", form.content);
     formData.append("image", form.image as File);
-    await API.post("/thread-post", formData).finally(()=> setLoadingPost(false))
-    refetch()
+    await API.post("/thread-post", formData).finally(()=> {
+      setLoadingPost(false)
+      refetch()
+    })
   }
 
   return (
@@ -111,6 +109,8 @@ function Home() {
           </Stack>
         </GridItem>
       </form>
+
+
     </Layout>
   );
 }

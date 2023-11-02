@@ -34,6 +34,6 @@ export function useThreads() {
     handleChange,
     fileInputRef,
     handleButtonClick,
-
+    setForm
   };
 }

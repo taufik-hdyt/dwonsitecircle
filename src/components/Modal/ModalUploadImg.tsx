@@ -34,7 +34,6 @@ const ModalUploadImg: React.FC<IProps> = ({
   image,
 }): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
-
   const onChangeImage = (e: any) => {
     setLoading(true);
     const selectedFIle = e.target.files[0];

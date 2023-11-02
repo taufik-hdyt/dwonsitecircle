@@ -6,7 +6,7 @@ import { API } from "../../libs/api";
 export const useFollow = ({onSuccess}: any)=>{
  return useMutation({
     mutationFn: async (id:number)=> {
-      await API.post(`follow/${id}`,"", {
+      await API.post(`/follow/${id}`,"", {
         headers: {
           Authorization: `Bearer ${localStorage.token}`
         }
