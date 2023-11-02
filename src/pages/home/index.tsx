@@ -22,14 +22,26 @@ import Layout from "../../components/Layout/Layout";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/type/RootState";
 import { useThreads } from "../../features/threads/hooks/useThread";
+import { FormEvent, useState } from "react";
+import { API } from "../../libs/api";
 
 function Home() {
   const auth = useSelector((state: RootState) => state.auth);
-  const { data: threads, isLoading: loadingThread } = useFetchThreads();
+  const { data: threads, isLoading: loadingThread ,refetch} = useFetchThreads();
   const dataThreads = threads?.data.data;
+  const [loadingPost,setLoadingPost] = useState<boolean>(false)
 
-  const { fileInputRef, handleButtonClick, handleChange, handlePost } =
-    useThreads();
+  const { fileInputRef, handleButtonClick, handleChange,form } = useThreads();
+
+  async function handlePost(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoadingPost(true)
+    const formData = new FormData();
+    formData.append("content", form.content);
+    formData.append("image", form.image as File);
+    await API.post("/thread-post", formData).finally(()=> setLoadingPost(false))
+    refetch()
+  }
 
   return (
     <Layout>
@@ -68,6 +80,7 @@ function Home() {
                 px={3}
                 rounded="full"
                 type="submit"
+                isLoading={loadingPost}
               >
                 Post
               </Button>

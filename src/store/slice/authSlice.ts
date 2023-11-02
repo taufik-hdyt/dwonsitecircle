@@ -17,7 +17,7 @@ const initialState : IProfile = {
     username: "",
   },
   followers: [],
-  following: [],
+  followings: [],
   message: ""
 }
 
@@ -39,7 +39,7 @@ export const authSlice = createSlice({
           username: payload.user.username,
         },
         followers: payload.followers,
-        following: payload.following,
+        followings: payload.followings,
         message: payload.message
 
       }

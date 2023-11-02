@@ -24,12 +24,14 @@ export function useLogin() {
   }
 
   const dispatch = useDispatch()
+
   async function authCheck() {
     try {
       setAuthToken(localStorage.token);
-      const response = await API.get("/auth/check");
+      const response = await API.get("/auth/check")
       dispatch(AUTH_CHECK(response.data));
     } catch (error) {
+      console.log(error);
       dispatch(AUTH_ERROR())
       return <Navigate to={"/login"} />;
     }

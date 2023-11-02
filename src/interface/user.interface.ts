@@ -22,8 +22,14 @@ export interface ILogin {
 
 export interface IProfile {
   user: IUser;
-  following: [];
+  followings: [];
   followers: [];
   message: string;
 }
 
+export interface IFollow {
+  fullname: string
+  id: number
+  profile_picture: string
+  username: string
+}

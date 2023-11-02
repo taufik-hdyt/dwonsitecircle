@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { API } from "../../../../../libs/api";
+import { API } from "../../../libs/api";
 
-export const useFetchUsersSuggest = () => {
+export const useFetchAllUsers = (search?: string | "") => {
   const { data: users, isLoading,refetch} = useQuery({
     queryFn: async () => {
-      const dataUsers = await API.get("/suggest-users");
+      const dataUsers = await API.get(`/users?search=${search}`);
       return dataUsers.data
-
     },
-    queryKey: ['fetch.users'],
+    queryKey: ['users'],
   });
   return {
     data: users,

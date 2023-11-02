@@ -12,6 +12,7 @@ import SearchPage from "./pages/searchUser";
 import ProfilePage from "./pages/profile";
 
 function App() {
+
   const dispatch = useDispatch();
   async function authCheck() {
     try {

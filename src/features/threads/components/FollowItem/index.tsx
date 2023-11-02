@@ -1,32 +1,57 @@
-import { Avatar, Button, HStack, Stack, Text } from "@chakra-ui/react"
-import {useState} from 'react'
+import { Avatar, Button, HStack, Stack, Text } from "@chakra-ui/react";
+import { useFollow } from "../../../follows/follow.hook";
+import { API } from "../../../../libs/api";
+import { useDispatch } from "react-redux";
+import { AUTH_CHECK } from "../../../../store/RootReducer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/type/RootState";
+import { IFollow } from "../../../../interface/user.interface";
 
-interface IProps{
-  name?: string
-  username?: string
-  status?: string
-  imgProfile?: string
+interface IProps {
+  name?: string;
+  username?: string;
+  imgProfile?: string;
+  id: number;
 }
-function FollowItem(props: IProps) {
-  const {name,status,username,imgProfile} = props
+function FollowItem({ imgProfile, name, username, id }: IProps) {
+  const auth = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
-  const [follow,setFollow] = useState(false)
+  const checkStatus = auth.followings.map((e:IFollow)=> e.id).includes(id) ? "Unfollow": "Follow"
 
-  function handleFollow(){
-    setFollow(!follow)
-  }
+  const { mutate: Follow } = useFollow({
+    onSuccess: async () => {
+      const response = await API.get("/auth/check");
+      dispatch(AUTH_CHECK(response.data));
+    },
+  });
   return (
-    <HStack justify='space-between' >
+    <HStack justify="space-between" >
       <HStack spacing={3}>
-      <Avatar size='sm' src={imgProfile} />
-      <Stack spacing={-4}>
-        <Text fontSize='xs' color='white'>{name}</Text>
-        <Text  color='whiteAlpha.600' fontSize='xs'>@{username}</Text>
-      </Stack>
+        <Avatar size="sm" src={imgProfile} />
+        <Stack spacing={-4}>
+          <Text fontSize="sm" color="white">
+            {name}
+          </Text>
+          <Text color="whiteAlpha.600" fontSize="xs">
+            @{username}
+          </Text>
+        </Stack>
       </HStack>
-      <Button _hover={{bg: 'whatsapp'}}  onClick={handleFollow} variant='outline' rounded='full' color={follow ? "white" : 'whiteAlpha.700'} size='sm'>{follow ? status : 'Following'}</Button>
+
+        <Button
+          onClick={() => Follow(id)}
+          _hover={{ bg: "gray" }}
+          variant="outline"
+          rounded="full"
+          size="sm"
+          color={checkStatus === "Unfollow" ? "gray" : "white"}
+        >
+          {checkStatus}
+        </Button>
+
     </HStack>
-  )
+  );
 }
 
-export default FollowItem
+export default FollowItem;
