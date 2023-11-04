@@ -60,7 +60,7 @@ function CardProfile({
           _hover={{ bg: "gray" }}
           onClick={openModalEditProfile}
         >
-          Edit Profile
+          Update Profile
         </Button>
       </Flex>
 

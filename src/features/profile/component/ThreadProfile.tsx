@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Avatar, Box, Flex, HStack, Image, Link, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import moment from "moment";
-import { ILike, IReplies } from "../../../../interface/thread.interface";
-import { useLike } from "../../../like/like.hook";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../store/type/RootState";
 import { useQueryClient } from "@tanstack/react-query";
+import { ILike, IReplies } from "../../../interface/thread.interface";
+import { RootState } from "../../../store/type/RootState";
+import { useLike } from "../../like/like.hook";
+import { Link } from "react-router-dom";
 
 
 interface IProps {
@@ -24,7 +25,7 @@ interface IProps {
   isLink?: boolean;
   idUser?: number
 }
-function Thread({
+function ThreadProfile({
   likes,
   content,
   idThread,
@@ -34,9 +35,7 @@ function Thread({
   replies,
   time,
   username,
-  isLink,
   idUser,
-
 }: IProps) {
   const queryClient = useQueryClient();
   const auth = useSelector((state: RootState) => state.auth);
@@ -61,8 +60,7 @@ function Thread({
           src={imgProfile}
         />
         <Box mb={4}>
-          {isLink ? (
-            <Link href={`/profile/${idUser}`}>
+            <Link  to={`/profile/${idUser}`}>
               <HStack>
                 <Text
                   display="flex"
@@ -84,23 +82,6 @@ function Thread({
                 </Text>
               </HStack>
             </Link>
-          ) : (
-            <HStack>
-              <Text
-                display="flex"
-                gap={1}
-                fontSize="sm"
-                fontWeight="semibold"
-                color="whiteAlpha.800"
-              >
-                {name}
-                <Text fontWeight="light" display="flex" color="whiteAlpha.600">
-                  {username} <BsDot color="gray" size={24} />
-                  {moment(time).format("MMM Do YY")}
-                </Text>
-              </Text>
-            </HStack>
-          )}
 
           <Text
             wordBreak="break-word"
@@ -132,7 +113,7 @@ function Thread({
                 {likes?.length ? likes.length : ""}
               </Text>
             </HStack>
-            <Link href={`reply/${idThread}`}>
+            <Link to={`/reply/${idThread}`}>
               <HStack cursor="pointer" color="whiteAlpha.600" mt={2}>
                 <BiCommentDetail size={24} />
                 <Text fontSize="sm" color="whiteAlpha.600">
@@ -147,4 +128,4 @@ function Thread({
   );
 }
 
-export default Thread;
+export default ThreadProfile;

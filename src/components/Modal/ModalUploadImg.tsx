@@ -15,77 +15,85 @@ import {
   Image,
   Spinner,
   Center,
+  ModalFooter,
+  Button,
+  useToast,
 } from "@chakra-ui/react";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState, ChangeEvent, useRef } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { API } from "../../libs/api";
-import { RxUpdate } from "react-icons/rx";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
-  setImage: Dispatch<SetStateAction<string>>;
-  image?: string;
+  setImageUrl: Dispatch<SetStateAction<string>>;
+  imageUrl?: string;
+  imagePreview?: string
+  setImagePreview:  Dispatch<SetStateAction<string>>
 }
 const ModalUploadImg: React.FC<IProps> = ({
   isOpen,
   onClose,
-  setImage,
-  image,
+  setImageUrl,
+  imageUrl,
+  setImagePreview,
+  imagePreview
 }): JSX.Element => {
+
+  const toast = useToast();
   const [loading, setLoading] = useState<boolean>(false);
-  const onChangeImage = (e: any) => {
+  const [selectedFile, setSelecetedFile] = useState<File | null>(null);
+
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files[0]) {
+      setSelecetedFile(e.target.files[0]);
+      const imgUrl = URL.createObjectURL(e.target.files[0])
+      setImagePreview(imgUrl)
+    }
+  }
+  const handleUpload = () => {
+    if (!selectedFile)
+      return toast({
+        title: "Input your image",
+        status: "error",
+        position: "top",
+      });
+
     setLoading(true);
-    const selectedFIle = e.target.files[0];
     const formData = new FormData();
-    formData.append("image", selectedFIle);
+    formData.append("image", selectedFile);
     API.post("/upload", formData).then((res) => {
-      setImage(res.data.data.url);
+      setImageUrl(res.data.data.url);
       setLoading(false);
+      onClose()
     });
   };
 
+  function handleCancel() {
+    setSelecetedFile(null);
+    onClose();
+  }
+
   return (
-    <Modal isCentered size="xl" isOpen={isOpen} onClose={onClose}>
+    <Modal isCentered size="sm" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Upload Image</ModalHeader>
+        <ModalHeader>Update Profile Picture</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {image && loading === false ? (
+          {imageUrl || imagePreview && loading === false ? (
             <>
-              <Image h="350px" w="full" src={image} alt="img" />
+              <Image w="full" h='200px' bgSize='cover'  src={imagePreview} alt="img" />
               <FormControl display="flex" justifyContent="center">
-                <FormLabel
-                  px={4}
-                  py={2}
-                  color="white"
-                  fontWeight="semibold"
-                  rounded="lg"
-                  htmlFor="image"
-                  cursor="pointer"
-                  w="fit-content"
-                >
-                  <Text
-                    bg="blackAlpha.700"
-                    color="white"
-                    fontWeight="semibold"
-                    px={4}
-                    py={2}
-                    rounded="lg"
-                    display="flex"
-                    gap={2}
-                  >
-                    Change
-                    <RxUpdate color="white" size={24} />
-                  </Text>
-                </FormLabel>
                 <Input
-                  onChange={onChangeImage}
+                  onChange={handleChange}
                   name="file"
                   type="file"
-                  id="image"
+                  id="updategambar"
                   display="none"
+                  accept="image/*"
+
                 />
               </FormControl>
             </>
@@ -117,10 +125,11 @@ const ModalUploadImg: React.FC<IProps> = ({
                         <Text color="green">Choose FIle</Text>
                       </FormLabel>
                       <Input
-                        onChange={onChangeImage}
+                        onChange={handleChange}
                         name="file"
                         type="file"
                         id="image"
+                        accept="image/*"
                         display="none"
                       />
                     </FormControl>
@@ -129,6 +138,16 @@ const ModalUploadImg: React.FC<IProps> = ({
               )}
             </>
           )}
+            <ModalFooter  justifyContent='space-evenly'>
+              {
+                imagePreview && <FormLabel cursor='pointer' mt={2} htmlFor="updategambar"  size='sm' colorScheme="blue">Change</FormLabel>
+              }
+
+              <Button size='sm' colorScheme="whatsapp" onClick={handleUpload}>
+                Update
+              </Button>
+              <Button size='sm' onClick={handleCancel}>Cancel</Button>
+            </ModalFooter>
         </ModalBody>
       </ModalContent>
     </Modal>

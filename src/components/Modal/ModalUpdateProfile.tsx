@@ -15,13 +15,14 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import { useRef, useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useRef } from "react";
 import { TbEditCircle } from "react-icons/tb";
 import { IUpdateProfile, IUser } from "../../interface/user.interface";
 import { useUpdateProfiile } from "../../features/auth/hooks/useUpdateProfile";
 import { API } from "../../libs/api";
 import { useDispatch } from "react-redux";
 import { AUTH_CHECK } from "../../store/RootReducer";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   isOpen: boolean;
@@ -33,20 +34,16 @@ export default function ModalEditProfile({
   onClose,
   userData,
 }: IProps) {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
-  function handleEditImage() {
-    if (fileRef.current) {
-      fileRef.current.click();
-    }
-  }
 
+
+  const queryClient = useQueryClient()
   const dispatch = useDispatch();
   const { mutate: updateProfile } = useUpdateProfiile({
     id: userData.id,
     onSuccess: async () => {
       const response = await API.get("/auth/check");
       dispatch(AUTH_CHECK(response.data));
+      queryClient.invalidateQueries({queryKey: ["threads"]})
       onClose();
     },
   });
@@ -65,8 +62,36 @@ export default function ModalEditProfile({
       [e.target.name]: e.target.value,
     });
   }
+  // ================================================================
 
-  function handleUpdate() {
+  // manipulasi input dan button membuka file gambar
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // state menangkap input gambar dari file
+  const [selectedGambarUrl, setSelectedGambarUrl] = useState<string>("");
+  const [selectedFile, setSelecetedFile] = useState<any>();
+
+  function handleChangeGambar(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files[0]) {
+      setSelecetedFile(e.target.files[0]);
+      const imgUrl = URL.createObjectURL(e.target.files[0]);
+      setSelectedGambarUrl(imgUrl);
+    }
+  }
+
+  const [loading, setLoding] = useState<boolean>(false);
+  // upload image ke cloudinari
+  const handleUpload = async () => {
+    setLoding(true);
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    await API.post("/upload", formData).then((res) => {
+      setLoding(false);
+      // menjalankan fungsi update ketika gambar berhasil di upload
+      handleUpdate(res.data.url);
+    });
+  };
+  function handleUpdate(imageLink: string) {
     updateProfile({
       email: form.email !== "" ? form.email : userData.email,
       fullname: form.fullname !== "" ? form.fullname : userData.fullname,
@@ -74,10 +99,7 @@ export default function ModalEditProfile({
         form.profile_description !== ""
           ? form.profile_description
           : userData.profile_description,
-      profile_picture:
-        form.profile_picture !== ""
-          ? form.profile_picture
-          : userData.profile_picture,
+      profile_picture: imageLink !== "" ? imageLink : userData.profile_picture,
       username: form.username !== "" ? form.username : userData.username,
     });
   }
@@ -90,8 +112,23 @@ export default function ModalEditProfile({
         <ModalCloseButton />
         <ModalBody>
           <Center>
-            <Box pos="relative" w="fit-content">
-              <Avatar src={userData.profile_picture} size="xl" />
+            <Box
+              pos="relative"
+              w="fit-content"
+              onClick={() => {
+                if (inputRef.current) {
+                  inputRef.current.click();
+                }
+              }}
+            >
+              <Avatar
+                src={
+                  selectedGambarUrl
+                    ? selectedGambarUrl
+                    : userData.profile_picture
+                }
+                size="xl"
+              />
               <Box
                 cursor="pointer"
                 pos="absolute"
@@ -100,25 +137,20 @@ export default function ModalEditProfile({
                 bg="black"
                 p={1}
                 rounded="full"
-                onClick={handleEditImage}
               >
                 <TbEditCircle color="white" size={16} />
               </Box>
             </Box>
-            <Input
-              ref={fileRef}
-              display="none"
-              id="image"
-              name="image"
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  setSelectedFile(e.target.files[0]);
-                }
-              }}
-            />
           </Center>
+          <Input
+            onChange={handleChangeGambar}
+            display="none"
+            type="file"
+            ref={inputRef}
+            accept="image/*"
+          />
+
+          {/* ============= */}
           <Grid mt={8} gridTemplateColumns="1fr 1fr" gap="2">
             <FormControl>
               <FormLabel>Username</FormLabel>
@@ -165,7 +197,12 @@ export default function ModalEditProfile({
         </ModalBody>
 
         <ModalFooter gap="4">
-          <Button onClick={handleUpdate} colorScheme="whatsapp">
+          <Button
+            isLoading={loading}
+            // onClick={handleUpdate}
+            onClick={handleUpload}
+            colorScheme="whatsapp"
+          >
             Update
           </Button>
           <Button mr={3} onClick={onClose}>

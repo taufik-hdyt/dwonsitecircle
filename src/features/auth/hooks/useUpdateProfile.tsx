@@ -9,11 +9,12 @@ export const useUpdateProfiile = ({onSuccess,id}: any)=>{
   const toast = useToast()
  return useMutation({
     mutationFn: async ( body: IUpdateProfile)=> {
-      const response = await API.patch(`/user/${id}`, body, {
+      await API.patch(`/user/${id}`, body, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       })
+
     },
     onSuccess,
     onError: (error: unknown) => {
