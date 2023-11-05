@@ -115,6 +115,9 @@ export default function ModalEditProfile({
             <Box
               pos="relative"
               w="fit-content"
+              bg="whatsapp.400"
+              rounded='full'
+              p={1}
               onClick={() => {
                 if (inputRef.current) {
                   inputRef.current.click();
