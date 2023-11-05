@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Button,
   Center,
   Flex,
@@ -9,6 +10,7 @@ import {
   Spinner,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { BiImageAdd } from "react-icons/bi";
 import Thread from "../../features/threads/components/ThreadItem";
@@ -21,6 +23,7 @@ import { RootState } from "../../store/type/RootState";
 import { useThreads } from "../../features/threads/hooks/useThread";
 import { FormEvent, useState } from "react";
 import { API } from "../../libs/api";
+import ModalPostThread from "../../components/Modal/ModalPostThread";
 
 function Home() {
   const auth = useSelector((state: RootState) => state.auth);
@@ -32,8 +35,8 @@ function Home() {
   const dataThreads = threads?.data.data;
   const [loadingPost, setLoadingPost] = useState<boolean>(false);
 
-  const { fileInputRef, handleButtonClick, handleChange, form, setForm } =
-    useThreads();
+  const { fileInputRef, handleButtonClick, handleChange, form } = useThreads();
+
   async function handlePost(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoadingPost(true);
@@ -45,6 +48,8 @@ function Home() {
       refetch();
     });
   }
+
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
     <Layout>
@@ -61,6 +66,7 @@ function Home() {
                 name="content"
                 variant="outline"
                 color="white"
+                onClick={onOpen}
                 placeholder="What is happening?!"
                 onChange={handleChange}
               />
@@ -116,6 +122,8 @@ function Home() {
           </Stack>
         </GridItem>
       </form>
+
+      <ModalPostThread isOpen={isOpen} onClose={onClose} />
     </Layout>
   );
 }

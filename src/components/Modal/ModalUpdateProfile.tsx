@@ -70,7 +70,6 @@ export default function ModalEditProfile({
   // state menangkap input gambar dari file
   const [selectedGambarUrl, setSelectedGambarUrl] = useState<string>("");
   const [selectedFile, setSelecetedFile] = useState<any>();
-
   function handleChangeGambar(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files[0]) {
       setSelecetedFile(e.target.files[0]);
@@ -115,7 +114,7 @@ export default function ModalEditProfile({
             <Box
               pos="relative"
               w="fit-content"
-              bg="whatsapp.400"
+              bg="lightgray"
               rounded='full'
               p={1}
               onClick={() => {
@@ -124,6 +123,7 @@ export default function ModalEditProfile({
                 }
               }}
             >
+
               <Avatar
                 src={
                   selectedGambarUrl

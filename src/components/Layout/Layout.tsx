@@ -16,9 +16,16 @@ const Layout: React.FC<IProps> = ({ children }): JSX.Element => {
 
   return (
     <Grid gridTemplateColumns={"300px 1.5fr 1fr"} bg="blackAlpha.800" h="100vh">
+
+
+
       <GridItem px={6} py={4} borderRight="1px solid gray">
         <Navbar />
       </GridItem>
+
+
+
+
       <GridItem
         px={6}
         py={4}
@@ -28,6 +35,10 @@ const Layout: React.FC<IProps> = ({ children }): JSX.Element => {
       >
         {children}
       </GridItem>
+
+
+
+
       <GridItem px={6} py={4}>
         <CardProfile
           openModalEditProfile={onOpen}

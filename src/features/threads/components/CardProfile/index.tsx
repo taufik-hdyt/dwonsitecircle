@@ -16,7 +16,7 @@ interface IProps {
   following?: [];
   followers?: [];
   profile_picture?: string;
-  openModalEditProfile: ()=> void
+  openModalEditProfile: () => void;
 }
 function CardProfile({
   followers,
@@ -25,28 +25,23 @@ function CardProfile({
   profile_bio,
   profile_picture,
   username,
-  openModalEditProfile
+  openModalEditProfile,
 }: IProps) {
-
   return (
     <Card bg="whiteAlpha.200" p={4}>
       <Text color="white">My Profile</Text>
       <Box
         pos="relative"
-        h="70px"
+        h="80px"
         mt={3}
         rounded="xl"
-        bg="linear-gradient(to top, #96fbc4 0%, #f9f586 100%)"
+        // bg="linear-gradient(to top, #96fbc4 0%, #f9f586 100%)"
+        bg="lightgrey"
       >
-        <Box
-          pos="absolute"
-          bottom={-6}
-          left={4}
-          p={1}
-          bg="blackAlpha.800"
-          rounded="full"
-        >
-          <Avatar size="md" src={profile_picture} />
+        <Box bg='whatsapp.500' p={1} rounded='full' bottom={-6} left={4} pos="absolute">
+          <Box  bg="#434343" rounded="full">
+            <Avatar size="lg" src={profile_picture} />
+          </Box>
         </Box>
       </Box>
       <Flex justify="right" mt={-6}>
@@ -76,11 +71,15 @@ function CardProfile({
         </Text>
         <HStack fontSize="sm">
           <HStack>
-            <Text color="whiteAlpha.800">{following?.length ? following.length : 0}</Text>
+            <Text color="whiteAlpha.800">
+              {following?.length ? following.length : 0}
+            </Text>
             <Text color="whiteAlpha.600">Following</Text>
           </HStack>
           <HStack>
-            <Text color="whiteAlpha.800">{followers?.length ? followers.length : 0}</Text>
+            <Text color="whiteAlpha.800">
+              {followers?.length ? followers.length : 0}
+            </Text>
             <Text color="whiteAlpha.600">Followers</Text>
           </HStack>
         </HStack>

@@ -22,7 +22,6 @@ function Suggest() {
               <FollowItem
                 key={e.id}
                 name={e.fullname}
-                status="Follow"
                 imgProfile={e.profile_picture}
                 username={e.username}
                 id={e.id}

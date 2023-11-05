@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { API } from "../../../libs/api";
-import { ICreateThread } from "../../../interface/thread.interface";
 import { AxiosError } from "axios";
 import {useToast} from '@chakra-ui/react'
 
@@ -8,7 +7,7 @@ import {useToast} from '@chakra-ui/react'
 export const useThreadReply = ({onSuccess,idThread}: any)=>{
   const toast = useToast()
  return useMutation({
-    mutationFn: async (body: ICreateThread)=> {
+    mutationFn: async (body: {content: string})=> {
       await API.post(`/thread/${idThread}/reply`, body, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`

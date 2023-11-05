@@ -111,6 +111,7 @@ function Thread({
           >
             {content}
           </Text>
+
           {imageContent && <Image w="300px" src={imageContent} alt="img" />}
 
           <HStack spacing={6}>

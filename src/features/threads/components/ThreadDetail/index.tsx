@@ -64,13 +64,10 @@ function ThreadDetail({
   });
 
   function handleReply() {
-    const body: ICreateThread = {
-      content: inputContent,
-    };
     // if (inputImage) {
     //   body.image = inputImage;
     // }
-    replyThread(body);
+    replyThread({content: inputContent});
   }
 
   return (
