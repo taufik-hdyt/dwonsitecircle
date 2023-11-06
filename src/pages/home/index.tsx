@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Box,
   Button,
   Center,
   Flex,
@@ -35,7 +34,15 @@ function Home() {
   const dataThreads = threads?.data.data;
   const [loadingPost, setLoadingPost] = useState<boolean>(false);
 
-  const { fileInputRef, handleButtonClick, handleChange, form } = useThreads();
+  const {
+    form,
+    inputFileRef,
+    handleChange,
+    handleButtonClick,
+    onOpen,
+    onClose,
+    isOpen,
+  } = useThreads();
 
   async function handlePost(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -48,8 +55,6 @@ function Home() {
       refetch();
     });
   }
-
-  const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
     <Layout>
@@ -80,7 +85,7 @@ function Home() {
                 name="image"
                 onChange={handleChange}
                 style={{ display: "none" }}
-                ref={fileInputRef}
+                ref={inputFileRef}
               />
 
               <Button
