@@ -39,9 +39,7 @@ function Home() {
     inputFileRef,
     handleChange,
     handleButtonClick,
-    onOpen,
-    onClose,
-    isOpen,
+    onOpen
   } = useThreads();
 
   async function handlePost(event: FormEvent<HTMLFormElement>) {
@@ -128,7 +126,7 @@ function Home() {
         </GridItem>
       </form>
 
-      <ModalPostThread isOpen={isOpen} onClose={onClose} />
+      {/* <ModalPostThread isOpen={isOpen} onClose={onClose} /> */}
     </Layout>
   );
 }

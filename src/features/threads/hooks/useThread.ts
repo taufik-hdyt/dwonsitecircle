@@ -53,7 +53,6 @@ export function useThreads() {
       console.log(response);
     },
     onSuccess: ()=> {
-      onClose()
       refetch()
       setForm({
         content: "",
@@ -69,6 +68,7 @@ export function useThreads() {
     await API.post("/upload", formData).then((res) => {
       setLoding(false);
       handlePost(res.data.url)
+      onClose()
     });
   };
 
@@ -77,6 +77,7 @@ export function useThreads() {
       content: form.content,
       image: image
     })
+
   }
 
 

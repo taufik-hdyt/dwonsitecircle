@@ -1,4 +1,4 @@
-import { Avatar, Box, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Box, Grid, Stack, Text } from "@chakra-ui/react";
 import { useFetchUser } from "../../features/user/useFetchUser.hooks";
 import { useParams } from "react-router-dom";
 import { IFollow, IProfile } from "../../interface/user.interface";
@@ -59,6 +59,8 @@ export default function ProfilePage() {
 
         <TabPanels>
           <TabPanel px={10}>
+            <Grid gridTemplateColumns="1fr 1fr">
+
             {threads
               ?.filter((a: IThreads) => a.user.id === idParams)
               .map((e: IThreads) => (
@@ -76,6 +78,7 @@ export default function ProfilePage() {
                   idUser={e.user.id}
                 />
               ))}
+            </Grid>
           </TabPanel>
           <TabPanel px={10}>
             <Stack spacing={4}>
