@@ -5,7 +5,9 @@ export const useFetchThreads = () => {
   const { data: threads, isLoading, refetch} = useQuery({
     queryFn: async () => {
       const dataThreads = await API.get("/threads");
-      return dataThreads;
+      console.log(dataThreads);
+      
+      return dataThreads; 
     },
     queryKey: ['threads'],
   });

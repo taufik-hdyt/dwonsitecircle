@@ -58,10 +58,6 @@ function Navbar() {
               <Text fontSize="sm  ">Profile</Text>
             </HStack>
           </Link>
-
-          <Button rounded="full" colorScheme="whatsapp">
-            Create Post
-          </Button>
         </Stack>
       </Box>
 
