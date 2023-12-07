@@ -10,8 +10,7 @@ import { useDispatch } from "react-redux";
 export function useLogin() {
   const navigate = useNavigate();
   const toast = useToast();
-  const [loading,setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState<ILogin>({
     emailOrUsername: "",
@@ -25,41 +24,42 @@ export function useLogin() {
     });
   }
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   async function authCheck() {
     try {
       setAuthToken(localStorage.token);
-      const response = await API.get("/auth/check")
+      const response = await API.get("/auth/check");
       dispatch(AUTH_CHECK(response.data));
     } catch (error) {
       console.log(error);
-      dispatch(AUTH_ERROR())
+      dispatch(AUTH_ERROR());
       return <Navigate to={"/login"} />;
     }
   }
 
   async function handleLogin() {
-    setLoading(true)
+    setLoading(true);
     try {
       const response = await API.post("/login", form);
-      localStorage.setItem("token", response.data.token)
-      setAuthToken(response.data.token)
+      localStorage.setItem("token", response.data.token);
+      setAuthToken(response.data.token);
       toast({
         title: response?.data.message,
         status: "success",
         position: "top",
-        duration: 1000
+        duration: 1000,
       });
-      authCheck()
-      navigate('/')
-      setLoading(false)
+      authCheck();
+      navigate("/");
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       if (axios.isAxiosError(error)) {
         toast({
           title: error?.response?.data.message,
           status: "error",
           position: "top",
-          duration: 1000
+          duration: 1000,
         });
       }
     }
@@ -69,6 +69,6 @@ export function useLogin() {
     handleChange,
     handleLogin,
     form,
-    loading
+    loading,
   };
 }

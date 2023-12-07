@@ -8,7 +8,7 @@ import axios from "axios";
 export function useRegister() {
   const navigate = useNavigate();
   const toast = useToast();
-  const [isLoading,setIsloading] = useState(false)
+  const [isLoading, setIsloading] = useState(false);
   const [form, setForm] = useState<IRegister>({
     email: "",
     fullname: "",
@@ -22,7 +22,7 @@ export function useRegister() {
   }
 
   async function handleRegister() {
-    setIsloading(true)
+    setIsloading(true);
     try {
       const response = await API.post("/register", form);
       navigate("/login");
@@ -31,9 +31,9 @@ export function useRegister() {
         status: "success",
         position: "top",
       });
-      setIsloading(false)
-
+      setIsloading(false);
     } catch (error) {
+      setIsloading(false);
       if (axios.isAxiosError(error)) {
         toast({
           title: error?.response?.data.message,
@@ -48,6 +48,6 @@ export function useRegister() {
     handleChange,
     handleRegister,
     form,
-    isLoading
+    isLoading,
   };
 }
