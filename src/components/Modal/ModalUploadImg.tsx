@@ -19,7 +19,7 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import React, { Dispatch, SetStateAction, useState, ChangeEvent, useRef } from "react";
+import React, { Dispatch, SetStateAction, useState, ChangeEvent } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { API } from "../../libs/api";
 

@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Divider,
-  Grid,
-  GridItem,
-  HStack,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Avatar, Box, Grid, GridItem, Stack, Text } from "@chakra-ui/react";
 import { useFetchUser } from "../../features/user/useFetchUser.hooks";
 import { useParams } from "react-router-dom";
 import { IFollow, IProfile } from "../../interface/user.interface";
@@ -17,7 +8,6 @@ import { IThreads } from "../../interface/thread.interface";
 import FollowItem from "../../features/threads/components/FollowItem";
 import ThreadProfile from "../../features/profile/component/ThreadProfile";
 import Navbar from "../../components/Navbar";
-import { CgMenuGridR } from "react-icons/cg";
 
 export default function ProfilePage() {
   const params = useParams();

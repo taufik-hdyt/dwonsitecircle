@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useRef, useEffect } from "react";
+import { useState, ChangeEvent, useRef } from "react";
 import { ICreateThread } from "../../../interface/thread.interface";
 import { API } from "../../../libs/api";
 import { useMutation } from "@tanstack/react-query";
