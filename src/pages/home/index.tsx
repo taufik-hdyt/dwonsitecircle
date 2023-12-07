@@ -9,7 +9,6 @@ import {
   Spinner,
   Stack,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { BiImageAdd } from "react-icons/bi";
 import Thread from "../../features/threads/components/ThreadItem";
@@ -20,58 +19,39 @@ import Layout from "../../components/Layout/Layout";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/type/RootState";
 import { useThreads } from "../../features/threads/hooks/useThread";
-import { FormEvent, useState } from "react";
-import { API } from "../../libs/api";
 import ModalPostThread from "../../components/Modal/ModalPostThread";
 
 function Home() {
   const auth = useSelector((state: RootState) => state.auth);
-  const {
-    data: threads,
-    isLoading: loadingThread,
-    refetch,
-  } = useFetchThreads();
+  const { data: threads, isLoading: loadingThread } = useFetchThreads();
   const dataThreads = threads?.data.data;
-  const [loadingPost, setLoadingPost] = useState<boolean>(false);
 
   const {
-    form,
     inputFileRef,
     handleChange,
     handleButtonClick,
-    onOpen
+    onOpen,
+    isOpen,
+    onClose,
   } = useThreads();
-
-  async function handlePost(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setLoadingPost(true);
-    const formData = new FormData();
-    formData.append("content", form.content);
-    formData.append("image", form.image as File);
-    await API.post("/thread-post", formData).finally(() => {
-      setLoadingPost(false);
-      refetch();
-    });
-  }
 
   return (
     <Layout>
-      <form onSubmit={handlePost} encType="multipart/form-data">
+      <form encType="multipart/form-data">
         <GridItem>
           <Text color="white" fontSize="lg">
             Home
           </Text>
           <HStack mt={5} justify="space-between">
             <HStack w="full">
-              <Avatar size="sm" mr={3} src={auth.user.profile_picture} />
+              <Avatar  size="sm" mr={3} src={auth.user.profile_picture} />
               <Input
                 fontSize="sm"
                 name="content"
                 variant="outline"
                 color="white"
-                onClick={onOpen}
                 placeholder="What is happening?!"
-                onChange={handleChange}
+                onClick={onOpen}
               />
             </HStack>
             <Flex>
@@ -92,7 +72,6 @@ function Home() {
                 px={3}
                 rounded="full"
                 type="submit"
-                isLoading={loadingPost}
               >
                 Post
               </Button>
@@ -126,7 +105,7 @@ function Home() {
         </GridItem>
       </form>
 
-      {/* <ModalPostThread isOpen={isOpen} onClose={onClose} /> */}
+      <ModalPostThread isOpen={isOpen} onClose={onClose} />
     </Layout>
   );
 }

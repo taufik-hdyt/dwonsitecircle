@@ -8,11 +8,7 @@ export const useThreadReply = ({onSuccess,idThread}: any)=>{
   const toast = useToast()
  return useMutation({
     mutationFn: async (body: {content: string})=> {
-      await API.post(`/thread/${idThread}/reply`, body, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
+      await API.post(`/thread/${idThread}/reply`, body)
     },
 
     onSuccess,

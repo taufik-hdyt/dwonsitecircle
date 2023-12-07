@@ -19,6 +19,8 @@ function App() {
       setAuthToken(localStorage.token);
       const response = await API.get("/auth/check");
       dispatch(AUTH_CHECK(response.data));
+      console.log(response);
+
     } catch (errorMessager) {
       dispatch(AUTH_ERROR());
       return <Navigate to={"/login"} />;

@@ -30,6 +30,8 @@ export default function ModalPostThread({ isOpen, onClose }: Props) {
     loading,
     selectedGambarUrl,
     inputFileRef,
+    form,
+    loadingCreateThread
   } = useThreads();
   return (
     <Modal size="lg" isOpen={isOpen} onClose={onClose}>
@@ -39,6 +41,7 @@ export default function ModalPostThread({ isOpen, onClose }: Props) {
         <ModalCloseButton />
         <ModalBody>
           <Textarea
+            value={form.content}
             resize="none"
             fontSize="sm"
             name="content"
@@ -62,7 +65,12 @@ export default function ModalPostThread({ isOpen, onClose }: Props) {
                 <Image maxH="250px" rounded="lg" src={selectedGambarUrl} />
               </Center>
             ) : (
-              <Box w='fit-content'  cursor="pointer" mt={3} onClick={handleOpenFile}>
+              <Box
+                w="fit-content"
+                cursor="pointer"
+                mt={3}
+                onClick={handleOpenFile}
+              >
                 <BiImageAdd color="green" size={30} />
               </Box>
             )}
@@ -82,7 +90,14 @@ export default function ModalPostThread({ isOpen, onClose }: Props) {
             </Button>
           )}
 
-          <Button isLoading={loading} onClick={handleUpload} px={4} size="sm" colorScheme="whatsapp">
+          <Button
+            isLoading={loading || loadingCreateThread}
+            onClick={handleUpload}
+            px={4}
+            size="sm"
+            colorScheme="whatsapp"
+            isDisabled={!form.content}
+          >
             Post
           </Button>
         </ModalFooter>

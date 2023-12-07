@@ -24,7 +24,6 @@ export function useLogin() {
   }
 
   const dispatch = useDispatch()
-
   async function authCheck() {
     try {
       setAuthToken(localStorage.token);

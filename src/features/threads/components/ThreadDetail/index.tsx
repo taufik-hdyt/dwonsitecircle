@@ -13,11 +13,7 @@ import {
 import moment from "moment";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
-import {
-  ICreateThread,
-  ILike,
-  IReplies,
-} from "../../../../interface/thread.interface";
+import { ILike, IReplies } from "../../../../interface/thread.interface";
 import { BsDot } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/type/RootState";
@@ -67,7 +63,7 @@ function ThreadDetail({
     // if (inputImage) {
     //   body.image = inputImage;
     // }
-    replyThread({content: inputContent});
+    replyThread({ content: inputContent });
   }
 
   return (
@@ -130,7 +126,7 @@ function ThreadDetail({
           <HStack w="full">
             <Avatar size="sm" mr={3} src={auth.user.profile_picture} />
             <Input
-            value={inputContent}
+              value={inputContent}
               onChange={(e) => setInputContent(e.target.value)}
               rounded="none"
               borderBottom="1px solid gray"
@@ -198,20 +194,6 @@ function ThreadDetail({
                   >
                     {e.content}
                   </Text>
-                  {/* <HStack spacing={6}>
-                    <HStack
-                      // onClick={handleLike}
-                      cursor="pointer"
-                      color="whiteAlpha.600"
-                      mt={2}
-                    >
-                      <AiFillHeart size={24} />
-
-                      <Text fontSize="sm" color="whiteAlpha.600">
-                        35
-                      </Text>
-                    </HStack>
-                  </HStack> */}
                 </Box>
               </Flex>
             ))}
