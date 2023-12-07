@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Avatar, Box, Flex, HStack, Image, Link, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
@@ -9,6 +9,7 @@ import { useLike } from "../../../like/like.hook";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/type/RootState";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 
 interface IProps {
@@ -62,7 +63,7 @@ function Thread({
         />
         <Box mb={4}>
           {isLink ? (
-            <Link href={`/profile/${idUser}`}>
+            <Link to={`/profile/${idUser}`}>
               <HStack>
                 <Text
                   display="flex"
@@ -133,7 +134,7 @@ function Thread({
                 {likes?.length ? likes.length : ""}
               </Text>
             </HStack>
-            <Link href={`reply/${idThread}`}>
+            <Link to={`reply/${idThread}`}>
               <HStack cursor="pointer" color="whiteAlpha.600" mt={2}>
                 <BiCommentDetail size={24} />
                 <Text fontSize="sm" color="whiteAlpha.600">
