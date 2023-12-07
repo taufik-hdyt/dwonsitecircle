@@ -1,8 +1,8 @@
-import { Box, Button, GridItem, HStack, Link, Spinner } from "@chakra-ui/react";
+import { Box, Button, GridItem, HStack, Spinner } from "@chakra-ui/react";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import Layout from "../../components/Layout/Layout";
 import ThreadDetail from "../../features/threads/components/ThreadDetail";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useFetchDetailThreads } from "../../features/threads/hooks/useFetchDetailThread";
 
 function Reply() {
@@ -17,7 +17,7 @@ function Reply() {
     <Layout>
       <GridItem>
         <HStack justifyContent='space-between'>
-          <Link href="/">
+          <Link to="/">
             <Button
               display="flex"
               color="white"

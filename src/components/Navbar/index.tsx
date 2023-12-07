@@ -3,7 +3,6 @@ import {
   Button,
   HStack,
   Heading,
-  Link,
   Stack,
   Text,
   useDisclosure,
@@ -15,7 +14,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/type/RootState";
 import ALertConfirm from "../Alert/ALert";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AUTH_LOGOUT } from "../../store/RootReducer";
 
 function Navbar() {
@@ -35,25 +34,25 @@ function Navbar() {
       <Box>
         <Heading color="green">circle</Heading>
         <Stack mt={8} spacing={6}>
-          <Link href="/">
+          <Link to="/">
             <HStack cursor="pointer" color="white">
               <AiOutlineHome size={25} />
               <Text fontSize="sm  ">Home</Text>
             </HStack>
           </Link>
-          <Link href="/search">
+          <Link to="/search">
             <HStack cursor="pointer" color="white">
               <TbUserSearch size={25} />
               <Text fontSize="sm  ">Search</Text>
             </HStack>
           </Link>
-          <Link href="/follows">
+          <Link to="/follows">
             <HStack cursor="pointer" color="white">
               <AiOutlineHeart color="transparant" size={25} />
               <Text fontSize="sm  ">Follows</Text>
             </HStack>
           </Link>
-          <Link href={`profile/${auth.user.id}`}>
+          <Link to={`profile/${auth.user.id}`}>
             <HStack cursor="pointer" color="white">
               <AiOutlineUser size={25} />
               <Text fontSize="sm  ">Profile</Text>
