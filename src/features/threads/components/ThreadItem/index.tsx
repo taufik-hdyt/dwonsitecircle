@@ -52,8 +52,8 @@ function Thread({
 
 
   return (
-    <Flex gap={3} borderBottom="1px solid gray" mt={1}>
-      <HStack align="start" mt={3} spacing={4}>
+    <Flex gap={3} mt={3} mx={3}>
+      <HStack align="start" spacing={4}>
         <Avatar
           bg="gray"
           fontWeight="semibold"
@@ -61,7 +61,7 @@ function Thread({
           name={name}
           src={imgProfile}
         />
-        <Box mb={4}>
+        <Box >
           {isLink ? (
             <Link to={`/profile/${idUser}`}>
               <HStack>
