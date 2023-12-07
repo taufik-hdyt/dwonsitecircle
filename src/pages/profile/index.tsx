@@ -1,13 +1,23 @@
-import { Avatar, Box, Grid, GridItem, Stack, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Grid,
+  GridItem,
+  HStack,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { useFetchUser } from "../../features/user/useFetchUser.hooks";
 import { useParams } from "react-router-dom";
-import { IFollow, IProfile } from "../../interface/user.interface";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { IProfile } from "../../interface/user.interface";
 import { useFetchThreads } from "../../features/threads/hooks/useFetchThread";
-import { IThreads } from "../../interface/thread.interface";
-import FollowItem from "../../features/threads/components/FollowItem";
-import ThreadProfile from "../../features/profile/component/ThreadProfile";
+// import { IThreads } from "../../interface/thread.interface";
+// import FollowItem from "../../features/threads/components/FollowItem";
+// import ThreadProfile from "../../features/profile/component/ThreadProfile";
 import Navbar from "../../components/Navbar";
+import { CgMenuGridR } from "react-icons/cg";
+import { IThreads } from "../../interface/thread.interface";
+import Thread from "../../features/threads/components/ThreadItem";
 
 export default function ProfilePage() {
   const params = useParams();
@@ -17,8 +27,8 @@ export default function ProfilePage() {
   const user: IProfile = data;
 
   const { data: dataThreads } = useFetchThreads();
-  const threads = dataThreads?.data.data;
-  const { data: dataUser } = useFetchUser(idParams);
+  const threads: IThreads[] = dataThreads?.data.data;
+  const threadUser = threads.filter((item) => item.user.id === idParams);
 
   return (
     <Grid gridTemplateColumns="300px 1fr" bg="blackAlpha.700" minH="100vh">
@@ -26,17 +36,15 @@ export default function ProfilePage() {
         <Navbar />
       </GridItem>
 
-      {/* <GridItem>
-      <Box px={6} py={8}>
+      <GridItem>
+        <Box px={6} py={8}>
           <HStack justify="space-evenly">
             <Box textAlign="center">
               <Avatar size="2xl" src={user?.user.profile_picture} />
               <Text mt={2} color="white" fontWeight="semibold">
                 {user?.user.fullname}
               </Text>
-              <Text color="white" >
-                {user?.user.profile_description}
-              </Text>
+              <Text color="white">{user?.user.profile_description}</Text>
             </Box>
             <HStack spacing={20}>
               <Stack fontSize="xl" spacing={0} color="white" textAlign="center">
@@ -44,23 +52,51 @@ export default function ProfilePage() {
                 <Text>Post</Text>
               </Stack>
               <Stack fontSize="xl" spacing={0} color="white" textAlign="center">
-                <Text fontWeight="semibold">{user?.followers.length ? user.followers.length : 0}</Text>
+                <Text fontWeight="semibold">
+                  {user?.followers.length ? user.followers.length : 0}
+                </Text>
                 <Text>Followers</Text>
               </Stack>
               <Stack fontSize="xl" spacing={0} color="white" textAlign="center">
-                <Text fontWeight="semibold">{user?.followings.length ? user.followings.length : 0}</Text>
+                <Text fontWeight="semibold">
+                  {user?.followings.length ? user.followings.length : 0}
+                </Text>
                 <Text>Following</Text>
               </Stack>
             </HStack>
           </HStack>
         </Box>
-        <Box  display="flex" justifyContent="center" alignItems="center"  pb={3} borderBottom="1px solid gray" mt={6} >
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          pb={3}
+          borderBottom="1px solid gray"
+          mt={6}
+        >
           <CgMenuGridR color="white" size={30} />
+
         </Box>
+          <Stack p={3}>
+            {threadUser?.map((e: IThreads, idx) => (
+              <Thread
+                key={idx}
+                likes={e.likes}
+                content={e.content}
+                idThread={e.id}
+                idUser={e.user.id}
+                imageContent={e.image}
+                imgProfile={e.user.profile_picture}
+                replies={e.replies}
+                name={e.user.fullname}
+                username={e.user.username}
+                time={e.createdAt}
+              />
+            ))}
+          </Stack>
+      </GridItem>
 
-      </GridItem> */}
-
-      <GridItem>
+      {/* <GridItem>
         <Box bg="blackAlpha.700" minH="100vh">
           <Box
             pos="relative"
@@ -145,7 +181,7 @@ export default function ProfilePage() {
             </TabPanels>
           </Tabs>
         </Box>
-      </GridItem>
+      </GridItem> */}
     </Grid>
   );
 }
