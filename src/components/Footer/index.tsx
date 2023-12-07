@@ -18,7 +18,7 @@ function Footer() {
         </Flex>
       </Flex>
       <Text fontSize="x-small" color="whiteAlpha.600" display="flex" gap={2}>
-        Powered by <Image w="30px" src="/src/assets/logo.png" alt="logo" />{" "}
+        Powered by <Image w="30px" src="https://i.imgur.com/IrgHeF9.png" alt="logo" />{" "}
         Dumbways Indonesia #1Coding Bootcamp
       </Text>
     </Card>
