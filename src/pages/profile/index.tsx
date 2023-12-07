@@ -29,6 +29,7 @@ export default function ProfilePage() {
   const { data: dataThreads } = useFetchThreads();
   const threads: IThreads[] = dataThreads?.data.data;
   const threadUser = threads.filter((item) => item.user.id === idParams);
+  
 
   return (
     <Grid gridTemplateColumns="300px 1fr" bg="blackAlpha.700" minH="100vh">
@@ -48,7 +49,7 @@ export default function ProfilePage() {
             </Box>
             <HStack spacing={20}>
               <Stack fontSize="xl" spacing={0} color="white" textAlign="center">
-                <Text fontWeight="semibold">0</Text>
+                <Text fontWeight="semibold">{threadUser.length}</Text>
                 <Text>Post</Text>
               </Stack>
               <Stack fontSize="xl" spacing={0} color="white" textAlign="center">
