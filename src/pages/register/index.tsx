@@ -16,7 +16,7 @@ import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 function Register() {
-  const { handleChange, handleRegister } = useRegister();
+  const { handleChange, handleRegister,isLoading } = useRegister();
   const [showPassword, setShowPassword] = useState(false);
   return (
     <Box
@@ -66,6 +66,7 @@ function Register() {
             onClick={handleRegister}
             rounded="full"
             colorScheme="whatsapp"
+            isLoading={isLoading}
           >
             Create
           </Button>

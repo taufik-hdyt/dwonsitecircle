@@ -1,6 +1,6 @@
 import axios from "axios";
 export const API = axios.create({
-  baseURL: "http://localhost:5000/api/v1"
+  baseURL: "https://circle-api-8tc6.onrender.com/api/v1"
 });
 
 

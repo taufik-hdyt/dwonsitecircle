@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 export function useLogin() {
   const navigate = useNavigate();
   const toast = useToast();
+  const [loading,setLoading] = useState(false)
+
 
   const [form, setForm] = useState<ILogin>({
     emailOrUsername: "",
@@ -37,6 +39,7 @@ export function useLogin() {
   }
 
   async function handleLogin() {
+    setLoading(true)
     try {
       const response = await API.post("/login", form);
       localStorage.setItem("token", response.data.token)
@@ -49,6 +52,7 @@ export function useLogin() {
       });
       authCheck()
       navigate('/')
+      setLoading(false)
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast({
@@ -65,5 +69,6 @@ export function useLogin() {
     handleChange,
     handleLogin,
     form,
+    loading
   };
 }

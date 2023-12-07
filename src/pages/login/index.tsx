@@ -15,7 +15,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { useState } from "react";
 
 function Login() {
-  const { handleChange, handleLogin } = useLogin();
+  const { handleChange, handleLogin,loading } = useLogin();
   const [showPassword,setShowPassword] = useState(false)
   return (
     <Box
@@ -62,7 +62,7 @@ function Login() {
             Forgot Password?
           </Text>
 
-          <Button onClick={handleLogin} rounded="full" colorScheme="whatsapp">
+          <Button isLoading={loading} onClick={handleLogin} rounded="full" colorScheme="whatsapp">
             Login
           </Button>
         </Stack>
