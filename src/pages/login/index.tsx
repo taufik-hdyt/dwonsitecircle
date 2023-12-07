@@ -71,7 +71,7 @@ function Login() {
           Don't have an account account yet?{" "}
           <Link href="/register" fontWeight="semibold" color="green">
             Create account
-          </Link>{" "}
+          </Link>
         </Text>
       </Box>
     </Box>
