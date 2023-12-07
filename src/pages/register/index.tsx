@@ -7,13 +7,13 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { useRegister } from "../../features/auth/hooks/useRegister";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 function Register() {
   const { handleChange, handleRegister,isLoading } = useRegister();
@@ -73,9 +73,11 @@ function Register() {
         </Stack>
         <Text color="white" fontSize="sm" display="flex" gap={2} mt={4}>
           Already have account?{" "}
-          <Link href="/login" fontWeight="semibold" color="green">
-            Login
-          </Link>{" "}
+          <Link to="/login">
+            <Text fontWeight="semibold" color="green">
+              Login
+            </Text>
+          </Link>
         </Text>
       </Box>
     </Box>

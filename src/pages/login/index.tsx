@@ -6,17 +6,17 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { useLogin } from "../../features/auth/hooks/useLogin";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Login() {
-  const { handleChange, handleLogin,loading } = useLogin();
-  const [showPassword,setShowPassword] = useState(false)
+  const { handleChange, handleLogin, loading } = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <Box
       bg="blackAlpha.800"
@@ -43,12 +43,13 @@ function Login() {
           </FormControl>
           <FormControl>
             <InputGroup>
-            <InputRightElement onClick={()=> setShowPassword(!showPassword)}>
-              {
-                showPassword ?  <AiOutlineEye size={24} /> : <AiOutlineEyeInvisible size={24} />
-              }
-
-            </InputRightElement>
+              <InputRightElement onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? (
+                  <AiOutlineEye size={24} />
+                ) : (
+                  <AiOutlineEyeInvisible size={24} />
+                )}
+              </InputRightElement>
               <Input
                 name="password"
                 type={showPassword ? "text" : "password"}
@@ -62,15 +63,22 @@ function Login() {
             Forgot Password?
           </Text>
 
-          <Button isLoading={loading} onClick={handleLogin} rounded="full" colorScheme="whatsapp">
+          <Button
+            isLoading={loading}
+            onClick={handleLogin}
+            rounded="full"
+            colorScheme="whatsapp"
+          >
             Login
           </Button>
         </Stack>
 
         <Text color="white" fontSize="xs" display="flex" gap={2} mt={4}>
-          Don't have an account account yet?{" "}
-          <Link href="/register" fontWeight="semibold" color="green">
-            Create account
+          Don't have an account account yet?
+          <Link to="/register">
+            <Text fontWeight="semibold" color="green">
+              Create account
+            </Text>
           </Link>
         </Text>
       </Box>
