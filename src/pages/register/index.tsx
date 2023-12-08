@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Box,
   Button,
@@ -6,15 +6,17 @@ import {
   Heading,
   Input,
   InputGroup,
+  InputRightElement,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { useRegister } from "../../features/auth/hooks/useRegister";
 import { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 function Register() {
-  const { handleChange, handleRegister, isLoading } = useRegister();
+  const { handleChange, handleRegister,isLoading } = useRegister();
   const [showPassword, setShowPassword] = useState(false);
   return (
     <Box
@@ -44,6 +46,13 @@ function Register() {
           </FormControl>
           <FormControl>
             <InputGroup>
+              <InputRightElement onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? (
+                  <AiOutlineEye size={24} />
+                ) : (
+                  <AiOutlineEyeInvisible size={24} />
+                )}
+              </InputRightElement>
               <Input
                 name="password"
                 type={showPassword ? "text" : "password"}
