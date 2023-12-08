@@ -28,7 +28,7 @@ export default function ProfilePage() {
 
   const { data: dataThreads } = useFetchThreads();
   const threads: IThreads[] = dataThreads?.data.data;
-  const threadUser = threads.filter((item) => item.user.id === idParams);
+  const threadUser = threads?.filter((item) => item.user.id === idParams);
   
 
   return (
