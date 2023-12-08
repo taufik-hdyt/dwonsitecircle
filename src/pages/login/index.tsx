@@ -5,12 +5,10 @@ import {
   Heading,
   Input,
   InputGroup,
-  InputRightElement,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { useLogin } from "../../features/auth/hooks/useLogin";
-import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -43,13 +41,6 @@ function Login() {
           </FormControl>
           <FormControl>
             <InputGroup>
-              <InputRightElement onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? (
-                  <AiOutlineEye size={24} />
-                ) : (
-                  <AiOutlineEyeInvisible size={24} />
-                )}
-              </InputRightElement>
               <Input
                 name="password"
                 type={showPassword ? "text" : "password"}
@@ -58,10 +49,6 @@ function Login() {
               />
             </InputGroup>
           </FormControl>
-
-          <Text fontSize="sm" textAlign="end">
-            Forgot Password?
-          </Text>
 
           <Button
             isLoading={loading}
