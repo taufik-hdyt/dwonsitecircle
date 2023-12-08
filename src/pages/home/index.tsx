@@ -7,7 +7,6 @@ import {
   Input,
   Spinner,
   Stack,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { BiImageAdd } from "react-icons/bi";
 import Thread from "../../features/threads/components/ThreadItem";

@@ -1,13 +1,11 @@
 import {
   Avatar,
   Box,
-  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
-  DrawerHeader,
   DrawerOverlay,
   HStack,
   Heading,
@@ -27,10 +25,10 @@ interface IProps {
 const DrawerMenu: React.FC<IProps> = ({ isOpen, onClose }): JSX.Element => {
   const auth = useSelector((state: RootState) => state.auth);
   return (
-    <Drawer  size="xs" isOpen={isOpen} placement="right" onClose={onClose}>
+    <Drawer size="xs" isOpen={isOpen} placement="right" onClose={onClose}>
       <DrawerOverlay />
       <DrawerContent bg="blackAlpha.800">
-        <DrawerCloseButton color='white' />
+        <DrawerCloseButton color="white" />
 
         <DrawerBody>
           <Box>
@@ -65,11 +63,13 @@ const DrawerMenu: React.FC<IProps> = ({ isOpen, onClose }): JSX.Element => {
         </DrawerBody>
 
         <DrawerFooter>
-          <HStack justify='left' w="full">
+          <HStack justify="left" w="full">
             <Avatar src={auth?.user.profile_picture} size="sm" />
             <Stack spacing={0}>
-            <Text color="white">{auth?.user.fullname}</Text>
-            <Text color="white" fontSize="xs">{auth?.user.email}</Text>
+              <Text color="white">{auth?.user.fullname}</Text>
+              <Text color="white" fontSize="xs">
+                {auth?.user.email}
+              </Text>
             </Stack>
           </HStack>
         </DrawerFooter>
