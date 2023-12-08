@@ -32,7 +32,7 @@ function SearchPage() {
   }
 
   return (
-    <Layout>
+    <Layout title="Search">
       <HStack>
         <InputGroup>
           <InputLeftElement>

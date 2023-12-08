@@ -16,10 +16,7 @@ import { IFollow } from "../../interface/user.interface"
 function FollowsPage() {
   const auth = useSelector((state: RootState) => state.auth);
   return (
-    <Layout>
-      <Text fontWeight="sm" fontSize="lg" color="white">
-        Follows
-      </Text>
+    <Layout title="Follows">
       <Tabs mt={4} size="lg" color="white" colorScheme="green">
         <TabList justifyContent="space-around">
           <Tab w="full" >Followers</Tab>
@@ -50,7 +47,7 @@ function FollowsPage() {
                   imgProfile={e.profile_picture}
                   name={e.fullname}
                   username={e.username}
-                  // status={followings}
+                  
                 />
               ))}
             </Stack>

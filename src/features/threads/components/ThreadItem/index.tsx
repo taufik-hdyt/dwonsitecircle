@@ -52,7 +52,7 @@ function Thread({
 
 
   return (
-    <Flex gap={3} mt={3} mx={3}>
+    <Flex gap={3} mt={3} >
       <HStack align="start" spacing={4}>
         <Avatar
           bg="gray"

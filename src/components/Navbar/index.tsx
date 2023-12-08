@@ -18,15 +18,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { AUTH_LOGOUT } from "../../store/RootReducer";
 
 function Navbar() {
-  const auth = useSelector((state: RootState) => state.auth)
-  const {isOpen,onClose,onOpen} = useDisclosure()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const auth = useSelector((state: RootState) => state.auth);
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  function handleLogout(){
-    dispatch(AUTH_LOGOUT())
-    navigate("/login")
-    onClose()
+  function handleLogout() {
+    dispatch(AUTH_LOGOUT());
+    navigate("/login");
+    onClose();
   }
 
   return (
@@ -70,12 +70,15 @@ function Navbar() {
         colorScheme="teal"
         variant="unstyled"
         onClick={onOpen}
-
       >
         Logout
       </Button>
 
-      <ALertConfirm onOk={()=>handleLogout()} isOpen={isOpen} onCLose={onClose} />
+      <ALertConfirm
+        onOk={() => handleLogout()}
+        isOpen={isOpen}
+        onCLose={onClose}
+      />
     </Stack>
   );
 }

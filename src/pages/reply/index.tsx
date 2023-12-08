@@ -14,7 +14,7 @@ function Reply() {
   const detailData = data?.data;
 
   return (
-    <Layout>
+    <Layout title="Reply">
       <GridItem>
         <HStack justifyContent='space-between'>
           <Link to="/">
