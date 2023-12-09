@@ -28,7 +28,6 @@ function Home() {
   const {
     inputFileRef,
     handleChange,
-    handleButtonClick,
     onOpen,
     isOpen,
     onClose,
@@ -52,7 +51,7 @@ function Home() {
             />
           </HStack>
           <Flex>
-            <Button onClick={handleButtonClick} variant="unstyled">
+            <Button onClick={onOpen} variant="unstyled">
               <BiImageAdd size={30} color="green" />
             </Button>
             <Input

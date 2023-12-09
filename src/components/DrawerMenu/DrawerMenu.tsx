@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -17,6 +18,10 @@ import { AiOutlineHeart, AiOutlineHome, AiOutlineUser } from "react-icons/ai";
 import { TbUserSearch } from "react-icons/tb";
 import { RootState } from "../../store/type/RootState";
 import { useSelector } from "react-redux";
+import { BiLogOut } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { AUTH_LOGOUT } from "../../store/RootReducer";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   isOpen: boolean;
@@ -24,6 +29,13 @@ interface IProps {
 }
 const DrawerMenu: React.FC<IProps> = ({ isOpen, onClose }): JSX.Element => {
   const auth = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  function handleLogout() {
+    dispatch(AUTH_LOGOUT());
+    navigate("/login");
+    onClose();
+  }
   return (
     <Drawer size="xs" isOpen={isOpen} placement="right" onClose={onClose}>
       <DrawerOverlay />
@@ -63,15 +75,30 @@ const DrawerMenu: React.FC<IProps> = ({ isOpen, onClose }): JSX.Element => {
         </DrawerBody>
 
         <DrawerFooter>
-          <HStack justify="left" w="full">
-            <Avatar src={auth?.user.profile_picture} size="sm" />
-            <Stack spacing={0}>
-              <Text color="white">{auth?.user.fullname}</Text>
-              <Text color="white" fontSize="xs">
-                {auth?.user.email}
-              </Text>
-            </Stack>
-          </HStack>
+          <Stack  w="full" justify="left">
+            <HStack>
+              <Avatar src={auth?.user.profile_picture} size="sm" />
+              <Stack spacing={0}>
+                <Text color="white">{auth?.user.fullname}</Text>
+                <Text color="white" fontSize="xs">
+                  {auth?.user.email}
+                </Text>
+              </Stack>
+            </HStack>
+
+            <Button
+              fontWeight="light"
+              color="white"
+              display="flex"
+              justifyContent="start"
+              leftIcon={<BiLogOut size={30} />}
+              colorScheme="teal"
+              variant="unstyled"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          </Stack>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

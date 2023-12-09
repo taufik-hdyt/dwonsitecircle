@@ -25,7 +25,7 @@ function Login() {
       justifyContent="center"
       alignItems="center"
     >
-      <Box w="350px">
+      <Box w="350px" p={{base:"6", md: ""}}>
         <Heading color="green" size="4xl">
           circle
         </Heading>
@@ -59,9 +59,9 @@ function Login() {
             </InputGroup>
           </FormControl>
 
-          <Text fontSize="sm" textAlign="end">
+          {/* <Text fontSize="sm" textAlign="end">
             Forgot Password?
-          </Text>
+          </Text> */}
 
           <Button
             isLoading={loading}
@@ -73,7 +73,7 @@ function Login() {
           </Button>
         </Stack>
 
-        <Text color="white" fontSize="xs" display="flex" gap={2} mt={4}>
+        <Text color="white" fontSize={{base:"x-small",md:"xs"}} display="flex" gap={2} mt={4}>
           Don't have an account account yet?
           <Link to="/register">
             <Text fontWeight="semibold" color="green">
