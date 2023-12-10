@@ -24,6 +24,7 @@ function Home() {
   const auth = useSelector((state: RootState) => state.auth);
   const { data: threads, isLoading: loadingThread } = useFetchThreads();
   const dataThreads = threads?.data.data;
+  
 
   const {
     inputFileRef,

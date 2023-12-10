@@ -2,19 +2,25 @@ import { useQuery } from "@tanstack/react-query";
 import { API } from "../../../libs/api";
 
 export const useFetchThreads = () => {
-  const { data: threads, isLoading, refetch} = useQuery({
+  const {
+    data: threads,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryFn: async () => {
-      const dataThreads = await API.get("/threads");
+      const dataThreads = await API.get("/threads",{headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }} );
       console.log(dataThreads);
       
-      return dataThreads; 
+      return dataThreads
     },
-    queryKey: ['threads'],
+    queryKey: ["threads"],
   });
+
   return {
     data: threads,
     isLoading,
-    refetch
+    refetch,
   };
 };
-

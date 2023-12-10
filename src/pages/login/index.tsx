@@ -73,10 +73,10 @@ function Login() {
           </Button>
         </Stack>
 
-        <Text color="white" fontSize={{base:"x-small",md:"xs"}} display="flex" gap={2} mt={4}>
+        <Text color="white" fontSize={{base:"x-small",md:"x-small"}} display="flex" gap={1} mt={4}>
           Don't have an account account yet?
           <Link to="/register">
-            <Text fontWeight="semibold" color="green">
+            <Text fontWeight="semibold" fontSize="x-small"  color="green">
               Create account
             </Text>
           </Link>
