@@ -11,7 +11,6 @@ import { RootState } from "../../../../store/type/RootState";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
-
 interface IProps {
   idThread?: number;
   imgProfile?: string;
@@ -23,7 +22,7 @@ interface IProps {
   time?: string;
   imageContent?: string;
   isLink?: boolean;
-  idUser?: number
+  idUser?: number;
 }
 function Thread({
   likes,
@@ -37,7 +36,6 @@ function Thread({
   username,
   isLink,
   idUser,
-
 }: IProps) {
   const queryClient = useQueryClient();
   const auth = useSelector((state: RootState) => state.auth);
@@ -49,10 +47,8 @@ function Thread({
     },
   });
 
-
-
   return (
-    <Flex gap={3} mt={3} >
+    <Flex gap={3} mt={3}>
       <HStack align="start" spacing={4}>
         <Avatar
           bg="gray"
@@ -61,7 +57,7 @@ function Thread({
           name={name}
           src={imgProfile}
         />
-        <Box >
+        <Box>
           {isLink ? (
             <Link to={`/profile/${idUser}`}>
               <HStack>
@@ -96,7 +92,7 @@ function Thread({
               >
                 {name}
                 <Text fontWeight="light" display="flex" color="whiteAlpha.600">
-                  {username} <BsDot color="gray" size={24} />
+                  <BsDot color="gray" size={24} />
                   {moment(time).format("MMM Do YY")}
                 </Text>
               </Text>
